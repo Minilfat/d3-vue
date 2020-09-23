@@ -4,13 +4,11 @@
 
 <script>
 import * as d3 from "d3";
-import * as topojson from "topojson-client";
-
+import * as topojson from "topojson";
 import topologyMap from "../assets/russia.json";
-console.log(topologyMap);
 
-const MAP_URL =
-  "https://raw.githubusercontent.com/alfonsoprado/russia-map-geojson-topojson/master/russia.topojson.json";
+// const MAP_URL =
+// "https://raw.githubusercontent.com/alfonsoprado/russia-map-geojson-topojson/master/russia.topojson.json";
 
 export default {
   name: "HelloWorld",
@@ -19,10 +17,12 @@ export default {
       jsonMap: {},
       svg: null,
       projection: null,
+      path: null,
+      publicPath: process.env.BASE_URL,
     };
   },
   methods: {
-    async loadData() {
+    loadData() {
       this.createMap();
       this.addUnis();
     },
@@ -62,10 +62,10 @@ export default {
         .append("g")
         .attr("class", "city")
         .attr("transform", function(d) {
-          console.log(d);
+          // console.log(d);
           return "translate(" + vm.projection([d.location.longitude, d.location.latitude]) + ")";
         });
-      console.log(city);
+      // console.log(city);
 
       city
         .append("circle")
@@ -82,17 +82,20 @@ export default {
     },
 
     createMap() {
-      const vm = this;
-      const w = 975;
-      const h = 610;
-      const objectName = "collection";
+      // const vm = this;
 
-      this.projection = d3.geoMercator().rotate([-11, 2]);
+      const w = 954;
+      const h = 560;
 
-      const path = d3
-        .geoPath()
-        .projection(this.projection)
-        .pointRadius(2);
+      this.projection = d3
+        .geoAlbers()
+        .rotate([-105, 0])
+        .center([-10, 65])
+        .parallels([52, 64])
+        .scale(700)
+        .translate([w / 2, h / 2]);
+
+      this.path = d3.geoPath().projection(this.projection);
 
       this.svg = d3
         .select("#map")
@@ -100,52 +103,101 @@ export default {
         .attr("width", w)
         .attr("height", h);
 
+      const zoom = d3
+        .zoom()
+        .scaleExtent([1, 3])
+        .on("zoom", zoomed);
+
+      this.svg.call(zoom);
+
+      const defs = this.svg.append("defs");
+
+      const pattern = defs
+        .append("pattern")
+        .attr("id", "basicPattern")
+        .attr("x", "0")
+        .attr("y", "0")
+        .attr("width", "954")
+        .attr("height", "560")
+        .attr("patternUnits", "userSpaceOnUse");
+
+      pattern.append("image").attr("href", `${this.publicPath}bg.png`);
+      // pattern.append("polygon").attr("points", "0,0 30,15 30,-15");
+      // pattern.append("polygon").attr("points", "0,0 30,15 0,30");
+      // pattern.append("polygon").attr("points", "0,30 30,15 30,45");
+      // pattern.append("polygon").attr("points", "60,0 30,15 30,-15");
+      // pattern.append("polygon").attr("points", "60,0 30,15 60,30");
+      // pattern.append("polygon").attr("points", "60,30 30,15 30,45");
+
+      // pattern
+      //   .append("polygon")
+      //   .attr("points", "0,0 50,0 0,75")
+      //   .attr("fill", "pink");
+      // pattern
+      //   .append("polygon")
+      //   .attr("points", "50,0 80,100 0,75")
+      //   .attr("fill", "blue");
+      // pattern
+      //   .append("polygon")
+      //   .attr("points", "0,75 80,100 0,100")
+      //   .attr("fill", "red");
+      // pattern
+      //   .append("polygon")
+      //   .attr("points", "50,0 80,100 120,0")
+      //   .attr("fill", "green");
+      // pattern
+      //   .append("polygon")
+      //   .attr("points", "80,100 120,0 120,100")
+      //   .attr("fill", "yellow");
+      // pattern.append("polygon").attr("points", "60,30 30,15 30,45");
+
+      // const mainGradient = defs.append("linearGradient").attr("id", "mainGradient");
+      // mainGradient
+      //   .append("stop")
+      //   .attr("class", "stop-left")
+      //   .attr("offset", "0");
+
+      // mainGradient
+      //   .append("stop")
+      //   .attr("class", "stop-right")
+      //   .attr("offset", "1");
+
+      // const pattern = this.svg.append("polygon").attr("points", "200,10 250,190 160,210");
+      // pattern.classed("filled");
+
       const g = this.svg.append("g");
 
-      centerZoom(vm.jsonMap, objectName, this.projection, path, w, h);
-      drawStates(g, vm.jsonMap, objectName);
-
-      function centerZoom(data, objectName, projection, path, width, height) {
-        const o = topojson.mesh(data, data.objects[objectName], function(a, b) {
-          return a === b;
+      g.attr("class", "region")
+        .selectAll("path")
+        .data(topojson.feature(topologyMap, topologyMap.objects.russia).features)
+        .enter()
+        .append("path")
+        .attr("d", this.path)
+        // .classed("filled", true)
+        // .style("background", function() {
+        //   // console.log(d);
+        //   // console.log(d);
+        //   // background: rgb(2,0,36);
+        //   // background: linear-gradient(38deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 25%, rgba(0,212,255,1) 100%);
+        //   return "linear-gradient(38deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 25%, rgba(0,212,255,1) 100%)";
+        // })
+        // .attr("stroke", "blue")
+        // .attr("stroke-width", 2)
+        // .style("opacity", 0.4)
+        .on("click", function(event, d) {
+          console.log(d);
+          // console.log(this);
+          // d3.select(this)
+          //   .transition()
+          //   .duration(300)
+          //   .style("opacity", 1);
+          // d.properties.region
+          // console.log(d);
+          // console.log(d.properties.region);
         });
 
-        projection.scale(1).translate([0, 0]);
-
-        const b = path.bounds(o),
-          s = 1 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
-          t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
-
-        projection.scale(s).translate(t);
-      }
-
-      function drawStates(g, data, objectName) {
-        const states = g
-          .selectAll(".state")
-          .data(topojson.feature(data, data.objects[objectName]).features)
-          .enter()
-          .append("path")
-          .attr("class", "state")
-          .attr("d", path)
-          .style("fill", "red");
-        // .style("stroke", "#3a403d")
-        // .style("stroke-width", "1px")
-        // .attr("cursor", "pointer")
-        // .on("mouseover", function() {
-        //   d3.select(this)
-        //     .attr("r", 10)
-        //     .style("fill", "red");
-        // })
-        // .on("mouseout", function() {
-        //   d3.select(this)
-        //     .attr("r", 5.5)
-        //     .style("fill", "#fff8ee");
-        // })
-        // .on("click", function(item) {
-        //   console.log(item);
-        // });
-
-        return states;
+      function zoomed({transform}) {
+        g.attr("transform", transform);
       }
     },
   },
@@ -154,3 +206,44 @@ export default {
   },
 };
 </script>
+
+<style>
+.region {
+  fill: url(#basicPattern);
+}
+/* 
+// #basicPattern polygon {
+//   fill: #04adf0;
+
+//   // &:nth-of-type(1),
+//   // &:nth-of-type(3) {
+//   //   fill: darken(#04adf0, 7%);
+//   // }
+
+//   // &:nth-of-type(2) {
+//   //   fill: lighten(#04adf0, 5%);
+//   // }
+//   // &:nth-of-type(6),
+//   // &:nth-of-type(4) {
+//   //   fill: lighten(#04adf0, 10%);
+//   // }
+//   // &:nth-of-type(5) {
+//   //   fill: darken(#04adf0, 10%);
+//   // }
+
+//   &:nth-of-type(1) {
+//     fill: darken(#04adf0, 7%);
+//   }
+
+//   &:nth-of-type(2) {
+//     fill: lighten(#04adf0, 5%);
+//   }
+
+//   &:nth-of-type(3) {
+//     fill: lighten(#04adf0, 10%);
+//   }
+//   &:nth-of-type(5) {
+//     fill: darken(#04adf0, 10%);
+//   }
+// } */
+</style>

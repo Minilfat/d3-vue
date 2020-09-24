@@ -7,13 +7,14 @@ import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import topologyMap from "./russia.json";
 
-// const MAP_COLORS = "cef0fb#04b4f4#05e1fc#04cffb#0497e8#52c2f2#30b7ee".split("#").map((c) => `#${c}`);
-
 const w = 954;
 const h = 560;
 
 export default {
-  name: "HelloWorld",
+  name: "Map",
+  props: {
+    places: Array,
+  },
   data() {
     return {
       svg: null,
@@ -27,49 +28,19 @@ export default {
   methods: {
     loadData() {
       this.createMap();
+      this.addBg();
       this.addUnis();
     },
 
     addUnis() {
-      const places = [
-        {
-          name: "MSC",
-          location: {
-            latitude: 55.75222,
-            longitude: 37.61556,
-          },
-        },
-        {
-          name: "GAVNA",
-          location: {
-            latitude: 59.89444,
-            longitude: 30.26417,
-          },
-        },
-        {
-          name: "EKAT",
-
-          location: {
-            latitude: 59.5638,
-            longitude: 150.80347,
-          },
-        },
-        {
-          name: "Krasnoyarsk",
-          location: {
-            latitude: 56.010569,
-            longitude: 92.852545,
-          },
-        },
-      ];
-
       this.svgG
         .selectAll(".city")
-        .data(places)
+        .data(this.places)
         .enter()
         .append("circle")
         .attr("r", 5)
         .style("fill", "red")
+        .style("cursor", "pointer")
         .attr("class", "city")
         .attr("transform", (d) => "translate(" + this.projection([d.location.longitude, d.location.latitude]) + ")")
         .on("click", clicked);
@@ -121,11 +92,38 @@ export default {
         .enter()
         .append("path")
         .attr("d", this.path);
-      // .attr("stroke", "#fff")
-      // .attr("stroke-width", 1);
     },
     addBg() {
-      //  this.svg = d3
+      const grad = this.svg
+        .append("defs")
+        .append("linearGradient")
+        .attr("id", "gradient")
+        .attr("gradientUnits", "userSpaceOnUse");
+
+      grad
+        .append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "#046bcb");
+
+      grad
+        .append("stop")
+        .attr("offset", "15%")
+        .attr("stop-color", "#0486de");
+
+      grad
+        .append("stop")
+        .attr("offset", "40%")
+        .attr("stop-color", "#04cffb");
+
+      grad
+        .append("stop")
+        .attr("offset", "70%")
+        .attr("stop-color", "#52c2f2");
+
+      grad
+        .append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "#046bcb");
     },
   },
   mounted() {
@@ -135,19 +133,7 @@ export default {
 </script>
 
 <style>
-#map {
-  overflow: hidden;
-}
-.img1 {
-  fill: url(#img1);
-}
-.img2 {
-  fill: url(#img2);
-}
-.img3 {
-  fill: url(#img3);
-}
-.img4 {
-  fill: url(#img4);
+#map .region {
+  fill: url(#gradient);
 }
 </style>

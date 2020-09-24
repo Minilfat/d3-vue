@@ -120,43 +120,12 @@ export default {
         .data(topojson.feature(topologyMap, topologyMap.objects.russia).features)
         .enter()
         .append("path")
-        .attr("d", this.path)
-        // .attr("fill", () => MAP_COLORS[Math.floor(Math.random() * 7)])
-        .attr("stroke", "#fff")
-        .attr("stroke-width", 1);
+        .attr("d", this.path);
+      // .attr("stroke", "#fff")
+      // .attr("stroke-width", 1);
     },
-
-    addZoomBehavior() {
-      const vm = this;
-      const zoom = d3
-        .zoom()
-        .scaleExtent([1, 5])
-        .on("zoom", zoomed);
-      this.svg.call(zoom);
-
-      function zoomed({transform}) {
-        vm.svg.attr("transform", transform);
-        // d3.select("#avatar")
-        //   .select("image")
-        //   .attr("width", 954 / transform.k)
-        //   .attr("height", 560 / transform.k);
-        // d3.selectAll("g.city").attr("transform", function (d) {
-
-        //   console.log("lon", d.location.longitude);
-        //   console.log("lat", d.location.latitude);
-
-        //   return (
-        //     "translate(" +
-        //     vm.projection([
-        //       transform.x + d.location.longitude * transform.k,
-        //       transform.y + d.location.latitude * transform.k,
-        //     ]) +
-        //     ")scale(" +
-        //     transform.k +
-        //     ")"
-        //   );
-        // });
-      }
+    addBg() {
+      //  this.svg = d3
     },
   },
   mounted() {

@@ -5,30 +5,32 @@
 <script>
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
-import topologyMap from "../assets/russia.json";
+import topologyMap from "./russia.json";
 
-const MAP_COLORS = "cef0fb#04b4f4#05e1fc#04cffb#0497e8#52c2f2#30b7ee".split("#").map((c) => `#${c}`);
+// const MAP_COLORS = "cef0fb#04b4f4#05e1fc#04cffb#0497e8#52c2f2#30b7ee".split("#").map((c) => `#${c}`);
+
+const w = 954;
+const h = 560;
 
 export default {
   name: "HelloWorld",
   data() {
     return {
-      jsonMap: {},
       svg: null,
+      svgG: null,
       projection: null,
       path: null,
       publicPath: process.env.BASE_URL,
+      navigatedPoint: null,
     };
   },
   methods: {
     loadData() {
       this.createMap();
       this.addUnis();
-      this.addZoomBehavior();
     },
 
     addUnis() {
-      const vm = this;
       const places = [
         {
           name: "MSC",
@@ -52,36 +54,50 @@ export default {
             longitude: 150.80347,
           },
         },
+        {
+          name: "Krasnoyarsk",
+          location: {
+            latitude: 56.010569,
+            longitude: 92.852545,
+          },
+        },
       ];
 
-      const city = this.svg
+      this.svgG
         .selectAll(".city")
         .data(places)
         .enter()
-        .append("g")
+        .append("circle")
+        .attr("r", 5)
+        .style("fill", "red")
         .attr("class", "city")
-        .attr("transform", function (d) {
-          return "translate(" + vm.projection([d.location.longitude, d.location.latitude]) + ")";
-        });
+        .attr("transform", (d) => "translate(" + this.projection([d.location.longitude, d.location.latitude]) + ")")
+        .on("click", clicked);
 
-      city.append("circle").attr("r", 5).style("fill", "red");
-      // city
-      //   .append("text")
-      //   .attr("x", 5)
-      //   .text(function (d) {
-      //     return d.name;
-      //   });
+      const vm = this;
+
+      function clicked(e, d) {
+        const [toX, toY] = vm.projection([d.location.longitude, d.location.latitude]);
+        let k = 1,
+          x = 0,
+          y = 0;
+
+        if (vm.navigatedPoint && vm.navigatedPoint[0] === toX && vm.navigatedPoint[1] === toY) {
+          vm.$set(vm, "navigatedPoint", null);
+        } else {
+          [x, y] = [toX, toY];
+          k = 2;
+          vm.$set(vm, "navigatedPoint", [x, y]);
+        }
+
+        vm.svgG
+          .transition()
+          .duration(750)
+          .attr("transform", "translate(" + -x + "," + -y + ")scale(" + k + ")");
+      }
     },
 
     createMap() {
-      // const vm = this;
-
-      const w = 954;
-      const h = 560;
-
-      // const imgW = 96;
-      // const imgH = 46;
-
       this.projection = d3
         .geoAlbers()
         .rotate([-105, 0])
@@ -91,42 +107,31 @@ export default {
         .translate([w / 2, h / 2]);
 
       this.path = d3.geoPath().projection(this.projection);
-      this.svg = d3.select("#map").append("svg").attr("width", w).attr("height", h);
+      this.svg = d3
+        .select("#map")
+        .append("svg")
+        .attr("width", w + "px")
+        .attr("height", h + "px");
 
-      // const defs = this.svg.append("defs").append("pattern");
-      // new Array(4).fill(1).forEach((i, index) => {
-      //   const number = i + index;
-      //   defs
-      //     .append("pattern")
-      //     .attr("id", `img${number}`)
-      //     .attr("x", "0")
-      //     .attr("y", "0")
-      //     .attr("width", imgW)
-      //     .attr("height", imgH)
-      //     .attr("patternUnits", "userSpaceOnUse")
-      //     .append("image")
-      //     .attr("xlink:href", `${this.publicPath}${number}.png`);
-      // });
-
-      this.svg
-        .append("g")
+      this.svgG = this.svg.append("g");
+      this.svgG
         .attr("class", "region")
         .selectAll("path")
         .data(topojson.feature(topologyMap, topologyMap.objects.russia).features)
         .enter()
         .append("path")
         .attr("d", this.path)
-        .attr("fill", () => MAP_COLORS[Math.floor(Math.random() * 7)])
+        // .attr("fill", () => MAP_COLORS[Math.floor(Math.random() * 7)])
         .attr("stroke", "#fff")
-        .attr("stroke-width", 1)
-        .on("click", function (event, d) {
-          console.log(d);
-        });
+        .attr("stroke-width", 1);
     },
 
     addZoomBehavior() {
       const vm = this;
-      const zoom = d3.zoom().scaleExtent([1, 5]).on("zoom", zoomed);
+      const zoom = d3
+        .zoom()
+        .scaleExtent([1, 5])
+        .on("zoom", zoomed);
       this.svg.call(zoom);
 
       function zoomed({transform}) {

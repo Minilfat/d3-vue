@@ -7,6 +7,7 @@
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import topologyMap from "./russia.json";
+import regionsCenters from "./regionCenters.json";
 
 const w = 954;
 const h = 560;
@@ -24,18 +25,17 @@ const svgTextProps = {
 export default {
   name: "Map",
   props: {
-    places: Array,
+    universities: Array,
   },
   data() {
     return {
       zoom: null,
-      zoomedNode: null,
       svg: null,
       svgG: null,
       projection: null,
       path: null,
       states: null,
-      stateCenters: null,
+      regionToUniMap: {},
       isSomeRegionZoomed: false,
       publicPath: process.env.BASE_URL,
     };
@@ -45,17 +45,38 @@ export default {
       this.createMap();
       this.addBg();
       this.distributeUiversitiesToStates();
-      this.addUnis();
+      this.addStateCentersToMap();
+      this.addUniversities();
     },
 
-    addUnis() {
-      const vm = this;
+    addUniversities() {
+      const universities = this.svgG
+        .selectAll(".universities")
+        .data(this.universities)
+        .enter()
+        .append("g")
+        .attr("class", "university")
+        .style("cursor", "pointer")
+        .attr("transform", (d) => {
+          return `translate(${this.projection([
+            d.location.longitude,
+            d.location.latitude,
+          ])})`;
+        })
+        .on("click", function (e, d) {
+          console.log(d.region);
+        });
+      universities.append("circle").attr("r", 2).attr("fill", "red");
+    },
 
+    addStateCentersToMap() {
+      const vm = this;
       const data =
-        Object.keys(this.stateCenters).length > 0
-          ? Object.keys(this.stateCenters).reduce((acc, key) => {
-              const object = { region: key, data: this.stateCenters[key] };
+        Object.keys(this.regionToUniMap).length > 0
+          ? Object.keys(this.regionToUniMap).reduce((acc, key) => {
+              const object = { region: key, data: this.regionToUniMap[key] };
               acc.push(object);
+
               return acc;
             }, [])
           : [];
@@ -67,14 +88,8 @@ export default {
         .append("g")
         .attr("class", "stateCenter")
         .style("cursor", "pointer")
-        .attr("transform", function (d) {
-          return `translate(${d.data.coordinates})`;
-        })
-        .on("click", function (e, d) {
-          const { region } = d;
-          const { feature } = vm.stateCenters[region];
-          vm.zoomToRegion(feature);
-        });
+        .attr("transform", (d) => `translate(${d.data.centroid})`)
+        .on("click", (e, d) => this.zoomToUniversities(d));
 
       enteredElements
         .append("circle")
@@ -87,25 +102,7 @@ export default {
         .attr("dy", svgTextProps.dy)
         .style("fill", "#000")
         .style("font-size", svgTextProps.fontSize)
-        .text((d) => d.data.count);
-
-      // function clicked(e, d) {
-      //   const [x, y] = vm.projection([
-      //     d.location.longitude,
-      //     d.location.latitude,
-      //   ]);
-      //   const translate = [w / 2 - cityScale * x, h / 2 - cityScale * y];
-      //   vm.svgG
-      //     .transition()
-      //     .duration(750)
-      //     .call(
-      //       vm.zoom.transform,
-      //       d3.zoomIdentity
-      //         .translate(translate[0], translate[1])
-      //         .scale(cityScale)
-      //     );
-      //   //   .on("end", resetVisibility);
-      // }
+        .text((d) => d.data.universities.length);
     },
 
     createMap() {
@@ -141,7 +138,10 @@ export default {
         .append("path")
         .attr("d", this.path)
         .attr("class", (d) => d.properties.region)
-        .on("click", this.zoomOutRegion);
+        .on("click", (e, d) => {
+          console.log(d.properties.region);
+          this.zoomOutRegion();
+        });
     },
 
     handleZoom(transform) {
@@ -159,17 +159,32 @@ export default {
         .attr("stroke-width", 1 / transform.k);
     },
 
-    zoomToRegion(d) {
+    zoomToUniversities(d) {
+      console.log(d);
       this.isSomeRegionZoomed = true;
-      this.resetVisibility(d.properties.region);
+      this.resetVisibility(d.region);
 
-      const bounds = this.path.bounds(d),
-        dx = bounds[1][0] - bounds[0][0],
-        dy = bounds[1][1] - bounds[0][1],
-        x = (bounds[0][0] + bounds[1][0]) / 2,
-        y = (bounds[0][1] + bounds[1][1]) / 2,
-        scale = Math.max(1, Math.min(maxScale, 0.9 / Math.max(dx / w, dy / h))),
+      this.svgG
+        .selectAll(".stateCenter")
+        .classed("hidden", true)
+        .style("cursor", "none");
+
+      const [x, y] = this.projection([
+        d.data.universities[0].longitude,
+        d.data.universities[0].latitude,
+      ]);
+      console.log(x, y);
+
+      const scale = 150,
         translate = [w / 2 - scale * x, h / 2 - scale * y];
+
+      // const bounds = this.path.bounds(d),
+      //   dx = bounds[1][0] - bounds[0][0],
+      //   dy = bounds[1][1] - bounds[0][1],
+      //   x = (bounds[0][0] + bounds[1][0]) / 2,
+      //   y = (bounds[0][1] + bounds[1][1]) / 2,
+      //   scale = Math.max(1, Math.min(maxScale, 0.9 / Math.max(dx / w, dy / h))),
+      //   ;
 
       this.svgG
         .transition()
@@ -178,7 +193,11 @@ export default {
         .call(
           this.zoom.transform,
           d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale)
-        );
+        )
+        .on("end", () => {
+          console.log("end");
+          // window.dispatchEvent(new Event("resize"));
+        });
     },
 
     zoomOutRegion() {
@@ -188,14 +207,17 @@ export default {
         .transition()
         .delay(400)
         .duration(750)
-        .call(this.zoom.transform, d3.zoomIdentity);
+        .call(this.zoom.transform, d3.zoomIdentity)
+        .on("end", () => {
+          this.svgG
+            .selectAll(".stateCenter")
+            .classed("hidden", false)
+            .style("cursor", "pointer");
+        });
     },
 
     resetVisibility(region) {
       const vm = this;
-      this.svgG
-        .selectAll(".stateCenter")
-        .classed("hidden", this.isSomeRegionZoomed);
 
       this.svgG.selectAll(".region path").classed("hidden", function (data) {
         return vm.isSomeRegionZoomed && data.properties.region !== region;
@@ -203,49 +225,18 @@ export default {
     },
 
     distributeUiversitiesToStates() {
-      const points = this.places.map((place) => {
-        return this.projection([
-          place.location.longitude,
-          place.location.latitude,
-        ]);
-      });
+      const regionToUniMap = this.universities.reduce((acc, uni) => {
+        !acc[uni.region]
+          ? (acc[uni.region] = {
+              universities: [uni.location],
+              centroid: regionsCenters[uni.region],
+            })
+          : acc[uni.region].universities.push(uni.location);
 
-      const distibuted = {};
+        return acc;
+      }, {});
 
-      for (let i = 0; i < this.states.features.length; i++) {
-        const feature = this.states.features[i];
-        const regionBounds = this.path.bounds(feature);
-
-        if (
-          regionBounds[0].some((i) => i === Infinity || i === -Infinity) ||
-          regionBounds[0].some((i) => i === Infinity || i === -Infinity)
-        )
-          continue;
-
-        for (let j = 0; j < points.length; j++) {
-          const [x, y] = points[j];
-
-          const isBetweenX = x < regionBounds[1][0] && x > regionBounds[0][0];
-          const isBetweenY = y < regionBounds[1][1] && y > regionBounds[0][1];
-
-          if (isBetweenX && isBetweenY) {
-            const { region } = feature.properties;
-            if (distibuted[region]) {
-              distibuted[region].count = distibuted[region].count + 1;
-            } else {
-              distibuted[region] = {};
-              distibuted[region].feature = feature;
-              distibuted[region].count = 1;
-              distibuted[region].coordinates = this.path.centroid(feature);
-              if (region === "RU-MOS") {
-                distibuted[region].coordinates = [140, 200];
-              }
-            }
-          }
-        }
-      }
-
-      this.stateCenters = distibuted;
+      this.regionToUniMap = regionToUniMap;
     },
 
     addBg() {
@@ -256,9 +247,15 @@ export default {
         .attr("gradientUnits", "userSpaceOnUse");
 
       grad.append("stop").attr("offset", "0%").attr("stop-color", "#046bcb");
-      grad.append("stop").attr("offset", "15%").attr("stop-color", "#0486de");
-      grad.append("stop").attr("offset", "40%").attr("stop-color", "#04cffb");
+      grad.append("stop").attr("offset", "10%").attr("stop-color", "#0486de");
+      grad.append("stop").attr("offset", "20%").attr("stop-color", "#046bcb");
+      grad.append("stop").attr("offset", "30%").attr("stop-color", "#0486de");
+      grad.append("stop").attr("offset", "40%").attr("stop-color", "#52c2f2");
+      grad.append("stop").attr("offset", "50%").attr("stop-color", "#0486de");
+      grad.append("stop").attr("offset", "60%").attr("stop-color", "#046bcb");
       grad.append("stop").attr("offset", "70%").attr("stop-color", "#52c2f2");
+      grad.append("stop").attr("offset", "80%").attr("stop-color", "#04cffb");
+      grad.append("stop").attr("offset", "90%").attr("stop-color", "#52c2f2");
       grad.append("stop").attr("offset", "100%").attr("stop-color", "#046bcb");
     },
   },
@@ -273,10 +270,14 @@ export default {
   fill: url(#gradient);
 }
 
-#map .stateCenter,
+#map .stateCenter {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
+}
+
 #map .region path {
   opacity: 1;
-  transition: opacity 400ms ease-in;
+  transition: opacity 200ms ease-in 200ms;
 }
 
 #map .stateCenter.hidden,

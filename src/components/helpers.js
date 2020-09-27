@@ -11,3 +11,5 @@ export function addBackgroundImagePattern(svgDefs, id, imageUrl) {
     .attr("width", 30)
     .attr("height", 30);
 }
+
+export function test() {}

@@ -49,7 +49,8 @@ const data = [
       { id: "idmow2", name: "РУДН", bgImageUrl: "/assets/urfu.png" },
       { id: "idmow3", name: "МИСиС", bgImageUrl: "/assets/misis.png" },
       { id: "idmow4", name: "Сеченовский университет", bgImageUrl: "/assets/sechenov.png" },
-      { id: "idmow5", name: "НИЯУ МИФИ", bgImageUrl: "/assets/mifi.png" }
+      { id: "idmow5", name: "НИЯУ МИФИ", bgImageUrl: "/assets/mifi.png" },
+      { id: "idmow6", name: "МФТИ", bgImageUrl: "/assets/mfti.png" }
     ]
   },
   {
@@ -79,11 +80,6 @@ const data = [
     location: { latitude: 55.143134, longitude: 60.1484693 },
     city: "MIASS",
     universities: [{ id: "idche3", name: "ФИЛИАЛ ЮУРГУ (НИУ)", bgImageUrl: "/assets/miass.png" }]
-  },
-  {
-    location: { latitude: 55.9296723, longitude: 37.5167821 },
-    city: "DOLGOPRUDNUY",
-    universities: [{ id: "idmos1", name: "МФТИ", bgImageUrl: "/assets/mfti.png" }]
   },
   {
     location: { latitude: 54.8453476, longitude: 83.0904755 },

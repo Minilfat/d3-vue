@@ -75,13 +75,102 @@ export default {
     cityClickedHandler(node, data) {
       if (data.universities.length === 1) {
         this.hideCity(node);
-        this.shownUniversity(data.universities[0].id);
+        this.showUniversity(data.universities[0].id);
       } else {
-        console.log("xui");
+        this.suggestUniversities(node, data.universities);
       }
     },
 
-    shownUniversity(id) {
+    suggestUniversities(node, universities) {
+      const total = universities.length;
+      const wrapper = d3.select(node).append("g");
+      const dx = 8;
+      const dy = 20;
+      const lineLength = 50;
+
+      let selectedId;
+
+      const initialLine = [
+        { x: 0, y: 0 },
+        { x: -dx, y: -dy },
+        { x: dx, y: -dy }
+      ];
+
+      const line = d3
+        .line()
+        .x(d => d.x)
+        .y(d => d.y);
+
+      const animationDuration = 400;
+      const path = wrapper
+        .append("path")
+        .datum(initialLine)
+        .attr("class", "line")
+        .attr("d", line)
+        .attr("stroke-dasharray", lineLength + " " + lineLength)
+        .attr("stroke-dashoffset", lineLength)
+        .attr("fill", "none")
+        .transition()
+        .duration(animationDuration)
+        .ease(d3.easeLinear)
+        .attr("stroke-dashoffset", 0);
+
+      universities.forEach(({ id }, i) => {
+        const circleRadius = 15;
+        const lineWidth = 24;
+
+        const circle = wrapper
+          .append("circle")
+          .style("opacity", 0)
+          .attr("r", circleRadius)
+          .attr("cx", (2 * circleRadius + 2 * dx) * i + circleRadius + dx)
+          .attr("cy", -dy)
+          .attr("fill", `url(#${id}bg)`)
+          .attr("stroke", CIRCLE_PROPS.fill)
+          .attr("stroke-width", 3);
+
+        circle
+          .transition(animationDuration)
+          .delay(animationDuration * i)
+          .duration(animationDuration)
+          .style("opacity", 1);
+
+        circle.on("click", e => {
+          e.stopPropagation();
+          wrapper
+            .transition()
+            .duration(animationDuration)
+            .style("opacity", 0)
+            .remove()
+            .on("end", () => {
+              this.hideCity(node);
+              this.showUniversity(id);
+            });
+        });
+
+        if (i + 1 < total) {
+          const lineStart = 2 * circleRadius * (i + 1) + 2 * dx * i + dx;
+          wrapper
+            .append("path")
+            .datum([
+              { x: lineStart, y: -dy },
+              { x: lineStart + 2 * dx, y: -dy }
+            ])
+            .attr("class", "line")
+            .attr("d", line)
+            .attr("stroke-dasharray", 2 * dx + " " + 2 * dx)
+            .attr("stroke-dashoffset", 2 * dx)
+            .attr("fill", "none")
+            .transition()
+            .duration(animationDuration)
+            .delay(animationDuration * (i + 1) + 100)
+            .ease(d3.easeLinear)
+            .attr("stroke-dashoffset", 0);
+        }
+      });
+    },
+
+    showUniversity(id) {
       const shownUni = d3.select(".city-point .university.shown");
       if (shownUni.node()) shownUni.classed("shown", false);
 
@@ -222,6 +311,16 @@ export default {
 <style>
 #map .region {
   fill: url(#gradient);
+}
+
+.line {
+  fill: none;
+  stroke: #e73d73;
+  stroke-width: 3;
+}
+
+.universitySelection.hidden {
+  opacity: 0;
 }
 
 .city-point circle {

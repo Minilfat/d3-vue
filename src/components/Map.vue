@@ -7,25 +7,27 @@
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import topologyMap from "./russia.json";
-import regionsCenters from "./regionCenters.json";
+import { addBackgroundImagePattern } from "./helpers";
+// import regionsCenters from "./regionCenters.json";
 
 const w = 954;
 const h = 560;
 
-const maxScale = 100;
-const cityScale = 250;
-const circleRadius = 3;
+const CIRCLE_PROPS = {
+  r: 6,
+  fill: "#e73d73"
+};
 
-const svgTextProps = {
-  fontSize: 13,
-  dx: 5,
-  dy: -1,
+const MAP_POINT = {
+  w: 38,
+  h: 52,
+  fill: "#e73d73"
 };
 
 export default {
   name: "Map",
   props: {
-    universities: Array,
+    universities: Array
   },
   data() {
     return {
@@ -35,79 +37,100 @@ export default {
       projection: null,
       path: null,
       states: null,
-      regionToUniMap: {},
-      isSomeRegionZoomed: false,
-      publicPath: process.env.BASE_URL,
+      // regionToUniMap: {},
+      // isSomeRegionZoomed: false,
+      currentSelection: { node: null, id: null },
+      publicPath: process.env.BASE_URL
     };
   },
   methods: {
     loadData() {
       this.createMap();
       this.addBg();
-      this.distributeUiversitiesToStates();
-      this.addStateCentersToMap();
-      this.addUniversities();
+      this.addCities();
+      this.addUniversitiesToCities();
     },
 
-    addUniversities() {
-      const universities = this.svgG
-        .selectAll(".universities")
+    addCities() {
+      const vm = this;
+
+      this.universitiesСities = this.svgG
+        .selectAll(".cities")
         .data(this.universities)
         .enter()
         .append("g")
-        .attr("class", "university")
+        .attr("class", d => `${d.city} city-point`)
         .style("cursor", "pointer")
-        .attr("transform", (d) => {
-          return `translate(${this.projection([
-            d.location.longitude,
-            d.location.latitude,
-          ])})`;
-        })
-        .on("click", function (e, d) {
-          console.log(d.region);
+        .attr("transform", d => `translate(${this.projection([d.location.longitude, d.location.latitude])})`)
+        .on("click", function(e, d) {
+          vm.cityClickedHandler(this, d);
         });
-      universities.append("circle").attr("r", 2).attr("fill", "red");
+
+      this.universitiesСities
+        .append("circle")
+        .attr("r", CIRCLE_PROPS.r)
+        .attr("fill", CIRCLE_PROPS.fill);
     },
 
-    addStateCentersToMap() {
-      const vm = this;
-      const data =
-        Object.keys(this.regionToUniMap).length > 0
-          ? Object.keys(this.regionToUniMap).reduce((acc, key) => {
-              const object = { region: key, data: this.regionToUniMap[key] };
-              acc.push(object);
+    cityClickedHandler(node, data) {
+      if (data.universities.length === 1) {
+        this.hideCity(node);
+        this.shownUniversity(data.universities[0].id);
+      } else {
+        console.log("xui");
+      }
+    },
 
-              return acc;
-            }, [])
-          : [];
+    shownUniversity(id) {
+      const shownUni = d3.select(".city-point .university.shown");
+      if (shownUni.node()) shownUni.classed("shown", false);
 
-      const enteredElements = this.svgG
-        .selectAll(".regionCenters")
-        .data(data)
-        .enter()
-        .append("g")
-        .attr("class", "stateCenter")
-        .style("cursor", "pointer")
-        .attr("transform", (d) => `translate(${d.data.centroid})`)
-        .on("click", (e, d) => this.zoomToUniversities(d));
+      d3.select(`#${id}`).classed("shown", true);
+    },
 
-      enteredElements
-        .append("circle")
-        .attr("r", circleRadius)
-        .attr("fill", "#fff");
+    hideCity(node) {
+      const hiddenCity = d3.select(".city-point circle.hidden");
+      if (hiddenCity.node()) hiddenCity.classed("hidden", false).style("cursor", "pointer");
 
-      enteredElements
-        .append("text")
-        .attr("dx", svgTextProps.dx)
-        .attr("dy", svgTextProps.dy)
-        .style("fill", "#000")
-        .style("font-size", svgTextProps.fontSize)
-        .text((d) => d.data.universities.length);
+      d3.select(node)
+        .select("circle")
+        .classed("hidden", true)
+        .style("cursor", "default");
+    },
+
+    addUniversitiesToCities() {
+      this.universities.forEach(({ city, universities }) => {
+        const cityG = d3.select(`.${city}`);
+        const uniG = cityG
+          .selectAll(".universities" + city)
+          .data(universities)
+          .enter()
+          .append("g")
+          .attr("id", d => d.id)
+          .attr("transform", `translate(${-MAP_POINT.w / 2}, ${-MAP_POINT.h})`)
+          .classed("university", true)
+          .each(({ id, bgImageUrl }) => {
+            addBackgroundImagePattern(this.svg.select("defs"), id + "bg", "https://cdn0.iconfinder.com/data/icons/flat-round-system/512/android-128.png");
+          });
+
+        uniG
+          .append("path")
+          .attr(
+            "d",
+            "m37.81794,19.33494c0,10.46259 -18.82207,32.31657 -18.82207,32.31657s-18.82207,-21.85398 -18.82207,-32.31657s8.427,-18.94413 18.82207,-18.94413s18.82207,8.48164 18.82207,18.94413z"
+          )
+          .attr("fill", MAP_POINT.fill);
+
+        uniG
+          .append("circle")
+          .attr("r", 15)
+          .attr("cx", MAP_POINT.w / 2)
+          .attr("cy", MAP_POINT.w / 2)
+          .attr("fill", ({ id }) => `url(#${id}bg)`);
+      });
     },
 
     createMap() {
-      const vm = this;
-
       this.states = topojson.feature(topologyMap, topologyMap.objects.russia);
       this.projection = d3
         .geoAlbers()
@@ -124,11 +147,7 @@ export default {
         .attr("width", w + "px")
         .attr("height", h + "px");
 
-      this.zoom = d3
-        .zoom()
-        .scaleExtent([1, maxScale])
-        .on("zoom", ({ transform }) => this.handleZoom(transform));
-
+      this.svg.append("defs");
       this.svgG = this.svg.append("g");
       this.svgG
         .attr("class", "region")
@@ -137,131 +156,66 @@ export default {
         .enter()
         .append("path")
         .attr("d", this.path)
-        .attr("class", (d) => d.properties.region)
-        .on("click", (e, d) => {
-          console.log(d.properties.region);
-          this.zoomOutRegion();
-        });
-    },
-
-    handleZoom(transform) {
-      this.svgG.attr("transform", transform);
-
-      this.svgG
-        .selectAll("text")
-        .attr("dx", svgTextProps.dx / transform.k)
-        .attr("dy", svgTextProps.dy / transform.k)
-        .style("font-size", svgTextProps.fontSize / transform.k);
-
-      this.svgG
-        .selectAll("circle")
-        .attr("r", circleRadius / transform.k)
-        .attr("stroke-width", 1 / transform.k);
-    },
-
-    zoomToUniversities(d) {
-      console.log(d);
-      this.isSomeRegionZoomed = true;
-      this.resetVisibility(d.region);
-
-      this.svgG
-        .selectAll(".stateCenter")
-        .classed("hidden", true)
-        .style("cursor", "none");
-
-      const [x, y] = this.projection([
-        d.data.universities[0].longitude,
-        d.data.universities[0].latitude,
-      ]);
-      console.log(x, y);
-
-      const scale = 150,
-        translate = [w / 2 - scale * x, h / 2 - scale * y];
-
-      // const bounds = this.path.bounds(d),
-      //   dx = bounds[1][0] - bounds[0][0],
-      //   dy = bounds[1][1] - bounds[0][1],
-      //   x = (bounds[0][0] + bounds[1][0]) / 2,
-      //   y = (bounds[0][1] + bounds[1][1]) / 2,
-      //   scale = Math.max(1, Math.min(maxScale, 0.9 / Math.max(dx / w, dy / h))),
-      //   ;
-
-      this.svgG
-        .transition()
-        .delay(450)
-        .duration(750)
-        .call(
-          this.zoom.transform,
-          d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale)
-        )
-        .on("end", () => {
-          console.log("end");
-          // window.dispatchEvent(new Event("resize"));
-        });
-    },
-
-    zoomOutRegion() {
-      this.isSomeRegionZoomed = false;
-      this.resetVisibility();
-      this.svgG
-        .transition()
-        .delay(400)
-        .duration(750)
-        .call(this.zoom.transform, d3.zoomIdentity)
-        .on("end", () => {
-          this.svgG
-            .selectAll(".stateCenter")
-            .classed("hidden", false)
-            .style("cursor", "pointer");
-        });
-    },
-
-    resetVisibility(region) {
-      const vm = this;
-
-      this.svgG.selectAll(".region path").classed("hidden", function (data) {
-        return vm.isSomeRegionZoomed && data.properties.region !== region;
-      });
-    },
-
-    distributeUiversitiesToStates() {
-      const regionToUniMap = this.universities.reduce((acc, uni) => {
-        !acc[uni.region]
-          ? (acc[uni.region] = {
-              universities: [uni.location],
-              centroid: regionsCenters[uni.region],
-            })
-          : acc[uni.region].universities.push(uni.location);
-
-        return acc;
-      }, {});
-
-      this.regionToUniMap = regionToUniMap;
+        .attr("class", d => d.properties.region);
     },
 
     addBg() {
       const grad = this.svg
-        .append("defs")
+        .select("defs")
         .append("linearGradient")
         .attr("id", "gradient")
         .attr("gradientUnits", "userSpaceOnUse");
 
-      grad.append("stop").attr("offset", "0%").attr("stop-color", "#046bcb");
-      grad.append("stop").attr("offset", "10%").attr("stop-color", "#0486de");
-      grad.append("stop").attr("offset", "20%").attr("stop-color", "#046bcb");
-      grad.append("stop").attr("offset", "30%").attr("stop-color", "#0486de");
-      grad.append("stop").attr("offset", "40%").attr("stop-color", "#52c2f2");
-      grad.append("stop").attr("offset", "50%").attr("stop-color", "#0486de");
-      grad.append("stop").attr("offset", "60%").attr("stop-color", "#046bcb");
-      grad.append("stop").attr("offset", "70%").attr("stop-color", "#52c2f2");
-      grad.append("stop").attr("offset", "80%").attr("stop-color", "#04cffb");
-      grad.append("stop").attr("offset", "90%").attr("stop-color", "#52c2f2");
-      grad.append("stop").attr("offset", "100%").attr("stop-color", "#046bcb");
-    },
+      grad
+        .append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "#046bcb");
+      grad
+        .append("stop")
+        .attr("offset", "10%")
+        .attr("stop-color", "#0486de");
+      grad
+        .append("stop")
+        .attr("offset", "20%")
+        .attr("stop-color", "#046bcb");
+      grad
+        .append("stop")
+        .attr("offset", "30%")
+        .attr("stop-color", "#0486de");
+      grad
+        .append("stop")
+        .attr("offset", "40%")
+        .attr("stop-color", "#52c2f2");
+      grad
+        .append("stop")
+        .attr("offset", "50%")
+        .attr("stop-color", "#0486de");
+      grad
+        .append("stop")
+        .attr("offset", "60%")
+        .attr("stop-color", "#046bcb");
+      grad
+        .append("stop")
+        .attr("offset", "70%")
+        .attr("stop-color", "#52c2f2");
+      grad
+        .append("stop")
+        .attr("offset", "80%")
+        .attr("stop-color", "#04cffb");
+      grad
+        .append("stop")
+        .attr("offset", "90%")
+        .attr("stop-color", "#52c2f2");
+      grad
+        .append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "#046bcb");
+    }
   },
+
   mounted() {
     this.loadData();
-  },
+  }
 };
 </script>
 
@@ -270,18 +224,22 @@ export default {
   fill: url(#gradient);
 }
 
-#map .stateCenter {
+.city-point circle {
   opacity: 1;
-  transition: opacity 200ms ease-in;
+  transition: opacity 500ms ease-in;
 }
-
-#map .region path {
-  opacity: 1;
-  transition: opacity 200ms ease-in 200ms;
-}
-
-#map .stateCenter.hidden,
-#map .region path.hidden {
+.city-point circle.hidden {
   opacity: 0;
+}
+
+.city-point .university {
+  opacity: 0;
+  transition: opacity 0.8s ease-in;
+  visibility: hidden;
+}
+
+.city-point .university.shown {
+  opacity: 1;
+  visibility: visible;
 }
 </style>

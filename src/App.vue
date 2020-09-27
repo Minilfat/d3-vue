@@ -9,131 +9,132 @@ import Map from "./components/Map.vue";
 
 const data = [
   {
-    location: { latitude: 59.9574001, longitude: 30.3061542 },
-    region: "RU-SPE",
+    location: { latitude: 59.924739, longitude: 30.380228 },
+    city: "SAINT-PETERBURG",
+    universities: [
+      { id: "idspe1", name: "Университет ИТМО", bgImageUrl: "/assets/itmo.png" },
+      { id: "idspe2", name: "СПбПУ", bgImageUrl: "/assets/spbpu.png" },
+      { id: "idspe3", name: "НИУ ВШЭ в Санкт-Петербурге", bgImageUrl: "/assets/sphse.png" },
+      { id: "idspe4", name: "СПбГЭТУ «ЛЭТИ»", bgImage: "/assets/sphse.png" }
+    ]
   },
   {
     location: { latitude: 53.2120118, longitude: 50.1753568 },
-    region: "RU-SAM",
-  },
-  {
-    location: { latitude: 60.005121, longitude: 30.369889 },
-    region: "RU-SPE",
+    city: "SAMARA",
+    universities: [{ id: "idsam1", name: "Самарский университет", bgImageUrl: "/assets/samara.png" }]
   },
   {
     location: { latitude: 56.9219608, longitude: 84.950256 },
-    region: "RU-TOM",
+    city: "TOMSK",
+    universities: [
+      { id: "idtom1", name: "ТПУ", bgImageUrl: "/assets/tpu.png" },
+      { id: "idtom2", name: "ТГУ", bgImageUrl: "/assets/tgu.png" }
+    ]
   },
   {
     location: { latitude: 57.1590108, longitude: 65.5279635 },
-    region: "RU-TYU",
+    city: "TYUMEN",
+    universities: [{ id: "idtyu1", name: "ФГАОУ ВО «Тюменский государственный университет»", bgImageUrl: "/assets/tymgu.png" }]
   },
   {
     location: { latitude: 56.8403246, longitude: 60.6138365 },
-    region: "RU-SVE",
+    city: "EKATERINBURG",
+    universities: [{ id: "idsve1", name: "УрФУ", bgImageUrl: "/assets/urfu.png" }]
   },
   {
     location: { latitude: 55.7614635, longitude: 37.6309452 },
-    region: "RU-MOW",
-  },
-  {
-    location: { latitude: 59.9800492, longitude: 30.3250261 },
-    region: "RU-SPE",
+    city: "MOSCOW",
+    universities: [
+      { id: "idmow1", name: "НИУ ВШЭ", bgImageUrl: "/assets/hse.png" },
+      { id: "idmow2", name: "РУДН", bgImageUrl: "/assets/urfu.png" },
+      { id: "idmow3", name: "МИСиС", bgImageUrl: "/assets/misis.png" },
+      { id: "idmow4", name: "Сеченовский университет", bgImageUrl: "/assets/sechenov.png" },
+      { id: "idmow5", name: "НИЯУ МИФИ", bgImageUrl: "/assets/mifi.png" }
+    ]
   },
   {
     location: { latitude: 56.3299584, longitude: 43.9201353 },
-    region: "RU-NIZ",
+    city: "NIZNOVGOROD",
+    universities: [
+      { id: "idniz1", name: "НИУ ВШЭ", bgImageUrl: "/assets/hsenn.png" },
+      { id: "idniz2", name: "УНН", bgImageUrl: "/assets/unn.png" }
+    ]
   },
   {
     location: { latitude: 58.010727, longitude: 56.2798073 },
-    region: "RU-PER",
-  },
-  {
-    location: { latitude: 56.2985946, longitude: 43.9790292 },
-    region: "RU-NIZ",
+    city: "PERM",
+    universities: [{ id: "idper1", name: "НИУ ВШЭ", bgImageUrl: "/assets/hseper.png" }]
   },
   {
     location: { latitude: 55.1604494, longitude: 61.3679071 },
-    region: "RU-CHE",
-  },
-  {
-    location: { latitude: 55.9296723, longitude: 37.5167821 },
-    region: "RU-MOS",
-  },
-  {
-    location: { latitude: 59.9718081, longitude: 30.2989611 },
-    region: "RU-SPE",
-  },
-  {
-    location: { latitude: 54.8453476, longitude: 83.0904755 },
-    region: "RU-NVS",
-  },
-  {
-    location: { latitude: 54.7242934, longitude: 20.5252919 },
-    region: "RU-KGD",
-  },
-  {
-    location: { latitude: 43.4335161, longitude: 39.9156999 },
-    region: "RU-KDA",
-  },
-  {
-    location: { latitude: 55.6505192, longitude: 37.4997957 },
-    region: "RU-MOW",
-  },
-  {
-    location: { latitude: 55.7273655, longitude: 37.5925208 },
-    region: "RU-MOW",
-  },
-  {
-    location: { latitude: 55.731551, longitude: 37.5695283 },
-    region: "RU-MOW",
-  },
-  {
-    location: { latitude: 55.6512482, longitude: 37.6570191 },
-    region: "RU-MOW",
-  },
-  { location: { latitude: 55.790447, longitude: 49.1192462 }, region: "RU-TA" },
-  {
-    location: { latitude: 55.0080181, longitude: 82.867719 },
-    region: "RU-NVS",
-  },
-  { location: { latitude: 56.4695, longitude: 84.9453243 }, region: "RU-TOM" },
-  {
-    location: { latitude: 43.0244636, longitude: 131.8916229 },
-    region: "RU-PRI",
-  },
-  {
-    location: { latitude: 55.022545, longitude: 82.9158592 },
-    region: "RU-NVS",
-  },
-  {
-    location: { latitude: 56.0099917, longitude: 92.7690147 },
-    region: "RU-KYA",
+    city: "Chelyabinsk",
+    universities: [{ id: "idche1", name: "ЮУРГУ", bgImageUrl: "/assets/uyrgu.png" }]
   },
   {
     location: { latitude: 55.1367954, longitude: 60.2646142 },
-    region: "RU-CHE",
+    city: "ZLATOUS",
+    universities: [{ id: "idche2", name: "ФИЛИАЛ ЮУРГУ (НИУ)", bgImageUrl: "/assets/zlatous.png" }]
   },
   {
     location: { latitude: 55.143134, longitude: 60.1484693 },
-    region: "RU-CHE",
+    city: "MIASS",
+    universities: [{ id: "idche3", name: "ФИЛИАЛ ЮУРГУ (НИУ)", bgImageUrl: "/assets/miass.png" }]
+  },
+  {
+    location: { latitude: 55.9296723, longitude: 37.5167821 },
+    city: "DOLGOPRUDNUY",
+    universities: [{ id: "idmos1", name: "МФТИ", bgImageUrl: "/assets/mfti.png" }]
+  },
+  {
+    location: { latitude: 54.8453476, longitude: 83.0904755 },
+    city: "NOVOSIBIRSK",
+    universities: [
+      { id: "idnvs1", name: "НГУ", bgImageUrl: "/assets/nsu.png" },
+      { id: "idnvs2", name: "НЮИ", bgImageUrl: "/assets/nyu.png" }
+    ]
+  },
+  {
+    location: { latitude: 54.7242934, longitude: 20.5252919 },
+    city: "KALININGRAD",
+    universities: [{ id: "idkgd1", name: "Балтийский федеральный университет имени Иммануила Канта", bgImageUrl: "/assets/bsukanta.png" }]
+  },
+  {
+    location: { latitude: 43.4335161, longitude: 39.9156999 },
+    city: "SOCHI",
+    universities: [{ id: "idnkda1", name: "Сочинский институт Российского универсиета дружбы народов", bgImageUrl: "/assets/rudnsochi.png" }]
+  },
+  {
+    location: { latitude: 55.790447, longitude: 49.1192462 },
+    city: "KAZAN",
+    universities: [{ id: "idta1", name: "КФУ", bgImageUrl: "/assets/kfu.png" }]
+  },
+  {
+    location: { latitude: 43.0244636, longitude: 131.8916229 },
+    city: "RUSSKIOSTROV",
+    universities: [{ id: "idpri1", name: "ДВФУ", bgImageUrl: "/assets/dvfu.png" }]
+  },
+  {
+    location: { latitude: 56.0099917, longitude: 92.7690147 },
+    city: "KRASNOYARSK",
+    universities: [{ id: "idkya1", name: "Сибирский федеральный университет", bgImageUrl: "/assets/SibFU.png" }]
   },
   {
     location: { latitude: 60.945878, longitude: 76.5543872 },
-    region: "RU-KHM",
-  },
+    city: "NIZHNEVARTOVSK",
+    universities: [{ id: "idkhm1", name: "ЮУрГУ филиал", bgImageUrl: "/assets/chel.png" }]
+  }
 ];
 
 export default {
   name: "App",
   components: {
-    Map,
+    Map
   },
   data() {
     return {
-      universities: data,
+      universities: data
     };
-  },
+  }
 };
 </script>
 

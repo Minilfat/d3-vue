@@ -8,7 +8,6 @@ import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import topologyMap from "./russia.json";
 import { addBackgroundImagePattern } from "./helpers";
-// import regionsCenters from "./regionCenters.json";
 
 const w = 954;
 const h = 560;
@@ -36,10 +35,6 @@ export default {
       svgG: null,
       projection: null,
       path: null,
-      states: null,
-      // regionToUniMap: {},
-      // isSomeRegionZoomed: false,
-      currentSelection: { node: null, id: null },
       publicPath: process.env.BASE_URL
     };
   },
@@ -68,6 +63,7 @@ export default {
 
       this.universitiesСities
         .append("circle")
+        .classed("city-point-circle", true)
         .attr("r", CIRCLE_PROPS.r)
         .attr("fill", CIRCLE_PROPS.fill);
     },
@@ -101,7 +97,7 @@ export default {
         .x(d => d.x)
         .y(d => d.y);
 
-      const animationDuration = 400;
+      const animationDuration = 500;
       const path = wrapper
         .append("path")
         .datum(initialLine)
@@ -163,7 +159,7 @@ export default {
             .attr("fill", "none")
             .transition()
             .duration(animationDuration)
-            .delay(animationDuration * (i + 1) + 100)
+            .delay(animationDuration * (i + 1) - animationDuration / 2)
             .ease(d3.easeLinear)
             .attr("stroke-dashoffset", 0);
         }
@@ -220,7 +216,7 @@ export default {
     },
 
     createMap() {
-      this.states = topojson.feature(topologyMap, topologyMap.objects.russia);
+      const borders = topojson.mesh(topologyMap, topologyMap.objects.russia, (a, b) => a === b);
       this.projection = d3
         .geoAlbers()
         .rotate([-105, 0])
@@ -240,65 +236,22 @@ export default {
       this.svgG = this.svg.append("g");
       this.svgG
         .attr("class", "region")
-        .selectAll("path")
-        .data(this.states.features)
-        .enter()
         .append("path")
-        .attr("d", this.path)
-        .attr("class", d => d.properties.region);
+        .attr("d", this.path(borders));
     },
 
     addBg() {
-      const grad = this.svg
+      const pattern = this.svg
         .select("defs")
-        .append("linearGradient")
-        .attr("id", "gradient")
-        .attr("gradientUnits", "userSpaceOnUse");
+        .append("pattern")
+        .attr("id", "bgImage")
+        .attr("x", "0")
+        .attr("y", "0")
+        .attr("width", "954")
+        .attr("height", "560")
+        .attr("patternUnits", "userSpaceOnUse");
 
-      grad
-        .append("stop")
-        .attr("offset", "0%")
-        .attr("stop-color", "#046bcb");
-      grad
-        .append("stop")
-        .attr("offset", "10%")
-        .attr("stop-color", "#0486de");
-      grad
-        .append("stop")
-        .attr("offset", "20%")
-        .attr("stop-color", "#046bcb");
-      grad
-        .append("stop")
-        .attr("offset", "30%")
-        .attr("stop-color", "#0486de");
-      grad
-        .append("stop")
-        .attr("offset", "40%")
-        .attr("stop-color", "#52c2f2");
-      grad
-        .append("stop")
-        .attr("offset", "50%")
-        .attr("stop-color", "#0486de");
-      grad
-        .append("stop")
-        .attr("offset", "60%")
-        .attr("stop-color", "#046bcb");
-      grad
-        .append("stop")
-        .attr("offset", "70%")
-        .attr("stop-color", "#52c2f2");
-      grad
-        .append("stop")
-        .attr("offset", "80%")
-        .attr("stop-color", "#04cffb");
-      grad
-        .append("stop")
-        .attr("offset", "90%")
-        .attr("stop-color", "#52c2f2");
-      grad
-        .append("stop")
-        .attr("offset", "100%")
-        .attr("stop-color", "#046bcb");
+      pattern.append("image").attr("href", `${this.publicPath}bg.png`);
     }
   },
 
@@ -310,30 +263,27 @@ export default {
 
 <style>
 #map .region {
-  fill: url(#gradient);
+  fill: url(#bgImage);
 }
 
-.line {
+#map .line {
   fill: none;
   stroke: #e73d73;
   stroke-width: 3;
 }
 
-.universitySelection.hidden {
-  opacity: 0;
+.city-point circle.city-point-circle {
+  fill-opacity: 1;
+  transition: fill-opacity 500ms linear;
 }
 
-.city-point circle {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-.city-point circle.hidden {
-  opacity: 0;
+.city-point circle.city-point-circle.hidden {
+  fill-opacity: 0;
 }
 
 .city-point .university {
   opacity: 0;
-  transition: opacity 0.8s ease-in;
+  transition: opacity 500ms linear;
   visibility: hidden;
 }
 

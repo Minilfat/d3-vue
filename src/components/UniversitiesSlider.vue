@@ -1,12 +1,13 @@
 <template>
-  <div class="carousel-view">
-    <transition-group class="carousel" tag="div">
-      <div v-for="uni in data" :key="uni.id" class="slide">
-        <h4>{{ uni.id }}</h4>
-        <UniversitiesSliderItem :isActive="false" bgImage="https://cdn0.iconfinder.com/data/icons/flat-round-system/512/android-128.png" />
-      </div>
-    </transition-group>
-
+  <div>
+    <div class="carousel-view">
+      <transition-group class="carousel" name="uni-list" tag="div" delay="100">
+        <div v-for="(uni, i) in data" :key="uni.id" class="uni-list-item" :id="uni.id" @click="_handleClick(uni.id, i)">
+          <UniversitiesSliderItem :name="uni.id" :isActive="Math.floor(data.length / 2) === i" bgImage="/aa.png" />
+        </div>
+      </transition-group>
+    </div>
+    <!-- bgImage="https://cdn0.iconfinder.com/data/icons/flat-round-system/512/android-128.png" -->
     <div class="carousel-controls">
       <button class="carousel-controls__button" @click="previous">prev</button>
       <button class="carousel-controls__button" @click="next">next</button>
@@ -19,6 +20,8 @@
 
 import UniversitiesSliderItem from "./UniversitiesSliderItem";
 
+const MOVE_DURATION = 600;
+
 export default {
   name: "UniversitiesSlider",
   components: {
@@ -29,58 +32,101 @@ export default {
   },
   data() {
     return {
-      data: this.sliderData
+      data: this.sliderData,
+      isMoving: false
     };
   },
   methods: {
     next() {
-      const first = this.data.shift();
-      this.data = this.data.concat(first);
+      if (this.isMoving) return;
+      this._blockMove();
+
+      const removed = this.data.splice(0, 1)[0];
+      requestAnimationFrame(() => {
+        this.data.push(removed);
+      });
     },
+
     previous() {
-      const last = this.data.pop();
-      this.data = [last].concat(this.data);
+      if (this.isMoving) return;
+      this._blockMove();
+
+      const removed = this.data.splice(this.data.length - 1, 1)[0];
+      requestAnimationFrame(() => {
+        this.data.unshift(removed);
+      });
+    },
+
+    _blockMove() {
+      this.isMoving = true;
+      setTimeout(() => {
+        this.isMoving = false;
+      }, MOVE_DURATION);
+    },
+
+    _handleClick(id, index) {
+      if (this.isMoving) return;
+      this._blockMove();
+
+      const count = index - Math.floor(this.data.length / 2);
+      const toPut = [];
+
+      for (let i = 0; i < Math.abs(count); i++) toPut.push(count > 0 ? this.data.shift() : this.data.pop());
+
+      requestAnimationFrame(() => {
+        this.data = count > 0 ? this.data.concat(toPut) : toPut.concat(this.data);
+      });
     }
   },
 
-  mounted() {
-    // this.loadData();
-  },
-
-  computed: {
-    // sliderData() {
-    //   return ;
-    // }
-  }
+  computed: {}
 };
 </script>
 
-<style>
+<style scoped>
 .carousel-view {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
 }
 
 .carousel {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   overflow: hidden;
 
   width: 80vw;
   max-width: 900px;
+  height: 160px;
 }
 
-.slide {
-  flex: 0 0 20em;
-  height: 20em;
-  margin: 1em;
+.uni-list-item {
+  min-width: 100px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  border: 0.1em dashed #000;
-  border-radius: 50%;
-  transition: transform 0.3s ease-in-out;
+  justify-content: center;
+  margin: 5px;
+
+  transition: all 0.6s;
 }
+
+.uni-list-enter,
+.uni-list-leave-to {
+  opacity: 0;
+}
+
+/* .carousel:nth-of-type(1) {
+  flex-basis: calc(50% - 100px);
+  justify-content: flex-end;
+}
+
+.carousel:nth-of-type(2) {
+  width: 100px;
+}
+
+.carousel:nth-of-type(3) {
+  flex-basis: calc(50% - 100px);
+  justify-content: flex-start;
+} */
 </style>

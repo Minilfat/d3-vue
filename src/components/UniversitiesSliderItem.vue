@@ -1,26 +1,24 @@
-// UniversitiesSliderItem
 <template>
-  <div class="circle">
-    <img :src="bgImage" alt="uni" />
+  <div>
+    <div class="circle" :class="{ active: isActive }">
+      <img :src="bgImage" alt="uni" />
+    </div>
+
+    <transition name="fade">
+      <div class="label" v-if="!isActive">
+        {{ name }}
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
-/* eslint-disable no-unused-vars */
-
 export default {
   name: "UniversitiesSliderItem",
   props: {
-    isActvie: Boolean,
-    bgImage: String
-  },
-  data() {
-    return {};
-  },
-  methods: {},
-
-  mounted() {
-    // this.loadData();
+    isActive: Boolean,
+    bgImage: String,
+    name: String
   }
 };
 </script>
@@ -29,11 +27,37 @@ export default {
 .circle {
   width: 80px;
   height: 80px;
+  border-radius: 50%;
 }
 
 .circle img {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
+}
+
+.circle.active {
+  width: 120px;
+  height: 120px;
+  padding: 20px;
+  border: 4px solid #e61973;
+
+  transition: all 0.5s ease-in;
+}
+
+.label {
+  height: 23px;
+  padding-top: 5px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.49s ease-out;
+  height: 23px;
+}
+
+/* .fade-enter, */
+.fade-leave-to {
+  opacity: 0;
+  height: 0px;
 }
 </style>

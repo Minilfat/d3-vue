@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import Map from "./components/Map.vue";
-import UniversitiesSlider from "./components/UniversitiesSlider.vue";
+import Map from "./components/Map/Map.vue";
+import UniversitiesSlider from "./components/UniversitiesSlider/UniversitiesSlider.vue";
 
 const data = [
   {

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Map :universities="universities" />
-    <UniversitiesSlider :sliderData="sliderData" />
+    <Map :universities="universities" :selectedUniversity="shownUniversity" @university-changed="showUniversityOnSlider" />
+    <UniversitiesSlider :sliderData="sliderData" :selectedUniversity="selectedUniversity" @university-changed="showUniveristyOnMap" />
   </div>
 </template>
 
@@ -156,8 +156,18 @@ export default {
   data() {
     return {
       universities: data,
-      sliderData: data.reduce((acc, item) => acc.concat(item.universities), [])
+      sliderData: data.reduce((acc, item) => acc.concat(item.universities), []),
+      selectedUniversity: "",
+      shownUniversity: ""
     };
+  },
+  methods: {
+    showUniversityOnSlider(id) {
+      this.selectedUniversity = id;
+    },
+    showUniveristyOnMap(id) {
+      this.shownUniversity = id;
+    }
   }
 };
 </script>

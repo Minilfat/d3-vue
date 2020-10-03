@@ -26,7 +26,8 @@ const MAP_POINT = {
 export default {
   name: "Map",
   props: {
-    universities: Array
+    universities: Array,
+    selectedUniversity: String
   },
   data() {
     return {
@@ -171,6 +172,7 @@ export default {
       if (shownUni.node()) shownUni.classed("shown", false);
 
       d3.select(`#${id}`).classed("shown", true);
+      this.$emit("university-changed", id);
     },
 
     hideCity(node) {
@@ -252,6 +254,16 @@ export default {
         .attr("patternUnits", "userSpaceOnUse");
 
       pattern.append("image").attr("href", "/images/bg.png");
+    }
+  },
+
+  watch: {
+    selectedUniversity(id) {
+      const dad = this.svgG.select(`#${id}`).node().parentNode;
+      if (dad) {
+        this.hideCity(dad);
+        this.showUniversity(id);
+      }
     }
   },
 

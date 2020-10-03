@@ -3,12 +3,13 @@
     <div class="carousel-view">
       <div class="carousel-controls left" @click="previous"></div>
       <transition-group class="carousel" name="uni-list" tag="div" delay="100">
-        <div v-for="(uni, i) in data" :key="uni.id" class="uni-list-item" :id="uni.id" @click="_handleClick(uni.id, i)">
+        <div v-for="(uni, i) in data" :key="uni.id" class="uni-list-item" :id="uni.id" @click="_gotToUniversity(uni.id, i)">
           <UniversitiesSliderItem :name="uni.name" :isActive="Math.floor(data.length / 2) === i" :bgImage="uni.bgImageUrl" />
         </div>
       </transition-group>
       <div class="carousel-controls right" @click="next"></div>
     </div>
+    <div class="carousel-active-bottom"></div>
   </div>
 </template>
 
@@ -25,7 +26,8 @@ export default {
     UniversitiesSliderItem
   },
   props: {
-    sliderData: Array
+    sliderData: Array,
+    selectedUniversity: String
   },
   data() {
     return {
@@ -41,6 +43,7 @@ export default {
       const removed = this.data.splice(0, 1)[0];
       requestAnimationFrame(() => {
         this.data.push(removed);
+        this._changeUniversity();
       });
     },
 
@@ -51,6 +54,7 @@ export default {
       const removed = this.data.splice(this.data.length - 1, 1)[0];
       requestAnimationFrame(() => {
         this.data.unshift(removed);
+        this._changeUniversity();
       });
     },
 
@@ -61,7 +65,7 @@ export default {
       }, MOVE_DURATION);
     },
 
-    _handleClick(id, index) {
+    _gotToUniversity(id, index) {
       if (this.isMoving) return;
       this._blockMove();
 
@@ -72,11 +76,30 @@ export default {
 
       requestAnimationFrame(() => {
         this.data = count > 0 ? this.data.concat(toPut) : toPut.concat(this.data);
+        this._changeUniversity();
       });
+    },
+
+    _changeUniversity() {
+      const { id } = this.data[Math.floor(this.data.length / 2)];
+      this.$emit("university-changed", id);
     }
   },
 
-  computed: {}
+  mounted() {
+    this.$nextTick(() => {
+      this._changeUniversity();
+    });
+  },
+
+  watch: {
+    selectedUniversity(id) {
+      const index = this.data.findIndex(uni => uni.id === id);
+      if (index >= 0) {
+        this._gotToUniversity(id, index);
+      }
+    }
+  }
 };
 </script>
 
@@ -95,10 +118,12 @@ export default {
 }
 
 .carousel-controls.left {
+  margin-right: 40px;
   background-image: url("/images/sliderLeftControl.svg");
 }
 
 .carousel-controls.right {
+  margin-left: 40px;
   background-image: url("/images/sliderRigthControl.svg");
 }
 
@@ -113,6 +138,22 @@ export default {
   height: 160px;
   padding-bottom: 6px;
   border-bottom: 2px solid #087eca;
+}
+
+.carousel-active-bottom {
+  position: relative;
+}
+
+.carousel-active-bottom::before {
+  content: " ";
+  width: 120px;
+  height: 22px;
+  background: url("/images/carouselActiveBottom.svg");
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -2px;
+  margin: auto;
 }
 
 .uni-list-item {

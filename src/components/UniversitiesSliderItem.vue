@@ -36,6 +36,7 @@ export default {
   width: 80px;
   height: 80px;
   border-radius: 50%;
+  margin-bottom: 5px;
 }
 
 .circle img {
@@ -47,7 +48,6 @@ export default {
 .circle.active {
   width: 120px;
   height: 120px;
-  /* padding: 10px; */
   background-color: #ffffff;
   border: 4px solid #e61973;
 
@@ -56,20 +56,18 @@ export default {
 
 .label {
   height: 23px;
-  padding-top: 5px;
+  overflow-y: hidden;
   text-align: center;
   font: normal normal normal 14px/24px OfficinaSansMediumC;
   letter-spacing: 0px;
   color: #000000de;
 }
 
-.fade-enter-active,
 .fade-leave-active {
   transition: all 0.49s ease-out;
   height: 23px;
 }
 
-/* .fade-enter, */
 .fade-leave-to {
   opacity: 0;
   height: 0px;

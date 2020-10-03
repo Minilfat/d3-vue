@@ -116,7 +116,7 @@ export default {
 }
 
 .uni-list-item {
-  min-width: 100px;
+  min-width: 98px;
   display: flex;
   flex-direction: column;
   align-items: center;

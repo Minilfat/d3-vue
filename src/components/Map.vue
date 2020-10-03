@@ -9,8 +9,8 @@ import * as topojson from "topojson-client";
 import topologyMap from "./russia.json";
 import { addBackgroundImagePattern } from "./helpers";
 
-const w = 954;
-const h = 560;
+const w = 964;
+const h = 520;
 
 const CIRCLE_PROPS = {
   r: 6,
@@ -18,8 +18,8 @@ const CIRCLE_PROPS = {
 };
 
 const MAP_POINT = {
-  w: 38,
-  h: 52,
+  w: 52,
+  h: 74,
   fill: "#e73d73"
 };
 
@@ -112,7 +112,7 @@ export default {
         .attr("stroke-dashoffset", 0);
 
       universities.forEach(({ id }, i) => {
-        const circleRadius = 15;
+        const circleRadius = 20;
         const lineWidth = 24;
 
         const circle = wrapper
@@ -202,13 +202,13 @@ export default {
           .append("path")
           .attr(
             "d",
-            "m37.81794,19.33494c0,10.46259 -18.82207,32.31657 -18.82207,32.31657s-18.82207,-21.85398 -18.82207,-32.31657s8.427,-18.94413 18.82207,-18.94413s18.82207,8.48164 18.82207,18.94413z"
+            "m51.81795,27.83493c0,15.15702 -25.82207,46.8166 -25.82207,46.8166s-25.82207,-31.65958 -25.82207,-46.8166s11.56104,-27.44412 25.82207,-27.44412s25.82207,12.28724 25.82207,27.44412z"
           )
           .attr("fill", MAP_POINT.fill);
 
         uniG
           .append("circle")
-          .attr("r", 15)
+          .attr("r", 20)
           .attr("cx", MAP_POINT.w / 2)
           .attr("cy", MAP_POINT.w / 2)
           .attr("fill", ({ id }) => `url(#${id}bg)`);
@@ -247,8 +247,8 @@ export default {
         .attr("id", "bgImage")
         .attr("x", "0")
         .attr("y", "0")
-        .attr("width", "954")
-        .attr("height", "560")
+        .attr("width", w + "px")
+        .attr("height", h + "px")
         .attr("patternUnits", "userSpaceOnUse");
 
       pattern.append("image").attr("href", "/images/bg.png");

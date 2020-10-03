@@ -1,16 +1,13 @@
 <template>
   <div>
     <div class="carousel-view">
+      <div class="carousel-controls left" @click="previous"></div>
       <transition-group class="carousel" name="uni-list" tag="div" delay="100">
         <div v-for="(uni, i) in data" :key="uni.id" class="uni-list-item" :id="uni.id" @click="_handleClick(uni.id, i)">
-          <UniversitiesSliderItem :name="uni.id" :isActive="Math.floor(data.length / 2) === i" bgImage="/aa.png" />
+          <UniversitiesSliderItem :name="uni.name" :isActive="Math.floor(data.length / 2) === i" :bgImage="uni.bgImageUrl" />
         </div>
       </transition-group>
-    </div>
-    <!-- bgImage="https://cdn0.iconfinder.com/data/icons/flat-round-system/512/android-128.png" -->
-    <div class="carousel-controls">
-      <button class="carousel-controls__button" @click="previous">prev</button>
-      <button class="carousel-controls__button" @click="next">next</button>
+      <div class="carousel-controls right" @click="next"></div>
     </div>
   </div>
 </template>
@@ -87,6 +84,22 @@ export default {
 .carousel-view {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.carousel-controls {
+  margin: 20px 10px 10px 10px;
+  width: 48px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.carousel-controls.left {
+  background-image: url("/images/sliderLeftControl.svg");
+}
+
+.carousel-controls.right {
+  background-image: url("/images/sliderRigthControl.svg");
 }
 
 .carousel {
@@ -96,8 +109,10 @@ export default {
   overflow: hidden;
 
   width: 80vw;
-  max-width: 900px;
+  max-width: 960px;
   height: 160px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #087eca;
 }
 
 .uni-list-item {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper">
     <div class="circle" :class="{ active: isActive }">
       <img :src="bgImage" alt="uni" />
     </div>
@@ -24,6 +24,14 @@ export default {
 </script>
 
 <style scoped>
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .circle {
   width: 80px;
   height: 80px;
@@ -33,12 +41,14 @@ export default {
 .circle img {
   width: 100%;
   height: 100%;
+  border-radius: 50%;
 }
 
 .circle.active {
   width: 120px;
   height: 120px;
-  padding: 20px;
+  /* padding: 10px; */
+  background-color: #ffffff;
   border: 4px solid #e61973;
 
   transition: all 0.5s ease-in;
@@ -47,6 +57,10 @@ export default {
 .label {
   height: 23px;
   padding-top: 5px;
+  text-align: center;
+  font: normal normal normal 14px/24px OfficinaSansMediumC;
+  letter-spacing: 0px;
+  color: #000000de;
 }
 
 .fade-enter-active,

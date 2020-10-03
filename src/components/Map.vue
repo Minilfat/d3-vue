@@ -195,7 +195,7 @@ export default {
           .attr("transform", `translate(${-MAP_POINT.w / 2}, ${-MAP_POINT.h})`)
           .classed("university", true)
           .each(({ id, bgImageUrl }) => {
-            addBackgroundImagePattern(this.svg.select("defs"), id + "bg", "https://cdn0.iconfinder.com/data/icons/flat-round-system/512/android-128.png");
+            addBackgroundImagePattern(this.svg.select("defs"), id + "bg", bgImageUrl);
           });
 
         uniG
@@ -251,7 +251,7 @@ export default {
         .attr("height", "560")
         .attr("patternUnits", "userSpaceOnUse");
 
-      pattern.append("image").attr("href", `${this.publicPath}bg.png`);
+      pattern.append("image").attr("href", "/images/bg.png");
     }
   },
 

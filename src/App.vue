@@ -1,10 +1,7 @@
 <template>
   <div id="app">
     <Map :universities="universities" />
-
-    <div style="padding: 20px 0">
-      <UniversitiesSlider :sliderData="sliderData" />
-    </div>
+    <UniversitiesSlider :sliderData="sliderData" />
   </div>
 </template>
 
@@ -17,112 +14,136 @@ const data = [
     location: { latitude: 59.924739, longitude: 30.380228 },
     city: "SAINT-PETERBURG",
     universities: [
-      { id: "idspe1", name: "Университет ИТМО", bgImageUrl: "/assets/itmo.png" },
-      { id: "idspe2", name: "СПбПУ", bgImageUrl: "/assets/spbpu.png" },
-      { id: "idspe3", name: "НИУ ВШЭ в Санкт-Петербурге", bgImageUrl: "/assets/sphse.png" },
-      { id: "idspe4", name: "СПбГЭТУ «ЛЭТИ»", bgImage: "/assets/sphse.png" }
+      { id: "idspe1", name: "Университет ИТМО", bgImageUrl: "/bundles/app/css/img/university/logo/itmo.png" },
+      { id: "idspe2", name: "СПбПУ", bgImageUrl: "/bundles/app/css/img/university/logo/spbpu.jpg" },
+      { id: "idspe3", name: "НИУ ВШЭ в Санкт-Петербурге", bgImageUrl: "/bundles/app/css/img/university/logo/hse.jpg" },
+      { id: "idspe4", name: "СПбГЭТУ «ЛЭТИ»", bgImageUrl: "/bundles/app/css/img/university/logo/leti.jpg" }
     ]
   },
   {
     location: { latitude: 53.2120118, longitude: 50.1753568 },
     city: "SAMARA",
-    universities: [{ id: "idsam1", name: "Самарский университет", bgImageUrl: "/assets/samara.png" }]
+    universities: [{ id: "idsam1", name: "Самарский университет", bgImageUrl: "/bundles/app/css/img/university/logo/samu.jpg" }]
   },
   {
     location: { latitude: 56.9219608, longitude: 84.950256 },
     city: "TOMSK",
     universities: [
-      { id: "idtom1", name: "ТПУ", bgImageUrl: "/assets/tpu.png" },
-      { id: "idtom2", name: "ТГУ", bgImageUrl: "/assets/tgu.png" }
+      { id: "idtom1", name: "ТПУ", bgImageUrl: "/bundles/app/css/img/university/logo/tpu.jpg" },
+      { id: "idtom2", name: "ТГУ", bgImageUrl: "/bundles/app/css/img/university/logo/tsu.jpg" }
     ]
   },
   {
     location: { latitude: 57.1590108, longitude: 65.5279635 },
     city: "TYUMEN",
-    universities: [{ id: "idtyu1", name: "ФГАОУ ВО «Тюменский государственный университет»", bgImageUrl: "/assets/tymgu.png" }]
+    universities: [
+      {
+        id: "idtyu1",
+        name: "ФГАОУ ВО «Тюменский государственный университет»",
+        bgImageUrl: "/bundles/app/css/img/university/logo/ut.jpg"
+      }
+    ]
   },
   {
     location: { latitude: 56.8403246, longitude: 60.6138365 },
     city: "EKATERINBURG",
-    universities: [{ id: "idsve1", name: "УрФУ", bgImageUrl: "/assets/urfu.png" }]
+    universities: [{ id: "idsve1", name: "УрФУ", bgImageUrl: "/bundles/app/css/img/university/logo/urfu.jpg" }]
   },
   {
     location: { latitude: 55.7614635, longitude: 37.6309452 },
     city: "MOSCOW",
     universities: [
-      { id: "idmow1", name: "НИУ ВШЭ", bgImageUrl: "/assets/hse.png" },
-      { id: "idmow2", name: "РУДН", bgImageUrl: "/assets/urfu.png" },
-      { id: "idmow3", name: "МИСиС", bgImageUrl: "/assets/misis.png" },
-      { id: "idmow4", name: "Сеченовский университет", bgImageUrl: "/assets/sechenov.png" },
-      { id: "idmow5", name: "НИЯУ МИФИ", bgImageUrl: "/assets/mifi.png" },
-      { id: "idmow6", name: "МФТИ", bgImageUrl: "/assets/mfti.png" }
+      { id: "idmow1", name: "НИУ ВШЭ", bgImageUrl: "/bundles/app/css/img/university/logo/hse.jpg" },
+      { id: "idmow2", name: "РУДН", bgImageUrl: "/bundles/app/css/img/university/logo/rudn.jpg" },
+      { id: "idmow3", name: "МИСиС", bgImageUrl: "/bundles/app/css/img/university/logo/misis.jpg" },
+      { id: "idmow4", name: "Сеченовский университет", bgImageUrl: "/bundles/app/css/img/university/logo/msmu.jpg" },
+      { id: "idmow5", name: "НИЯУ МИФИ", bgImageUrl: "/bundles/app/css/img/university/logo/mifi.jpg" },
+      { id: "idmow6", name: "МФТИ", bgImageUrl: "/bundles/app/css/img/university/logo/mipt.png" }
     ]
   },
   {
     location: { latitude: 56.3299584, longitude: 43.9201353 },
     city: "NIZNOVGOROD",
     universities: [
-      { id: "idniz1", name: "НИУ ВШЭ", bgImageUrl: "/assets/hsenn.png" },
-      { id: "idniz2", name: "УНН", bgImageUrl: "/assets/unn.png" }
+      { id: "idniz1", name: "НИУ ВШЭ", bgImageUrl: "/bundles/app/css/img/university/logo/hse.jpg" },
+      { id: "idniz2", name: "УНН", bgImageUrl: "/bundles/app/css/img/university/logo/unn.jpg" }
     ]
   },
   {
     location: { latitude: 58.010727, longitude: 56.2798073 },
     city: "PERM",
-    universities: [{ id: "idper1", name: "НИУ ВШЭ", bgImageUrl: "/assets/hseper.png" }]
+    universities: [{ id: "idper1", name: "НИУ ВШЭ", bgImageUrl: "/bundles/app/css/img/university/logo/hse.jpg" }]
   },
   {
     location: { latitude: 55.1604494, longitude: 61.3679071 },
     city: "Chelyabinsk",
-    universities: [{ id: "idche1", name: "ЮУРГУ", bgImageUrl: "/assets/uyrgu.png" }]
+    universities: [{ id: "idche1", name: "ЮУРГУ", bgImageUrl: "/bundles/app/css/img/university/logo/susu.jpg" }]
   },
   {
     location: { latitude: 55.1367954, longitude: 60.2646142 },
     city: "ZLATOUS",
-    universities: [{ id: "idche2", name: "ФИЛИАЛ ЮУРГУ (НИУ)", bgImageUrl: "/assets/zlatous.png" }]
+    universities: [{ id: "idche2", name: "ФИЛИАЛ ЮУРГУ (НИУ)", bgImageUrl: "/bundles/app/css/img/university/logo/susu.jpg" }]
   },
   {
     location: { latitude: 55.143134, longitude: 60.1484693 },
     city: "MIASS",
-    universities: [{ id: "idche3", name: "ФИЛИАЛ ЮУРГУ (НИУ)", bgImageUrl: "/assets/miass.png" }]
+    universities: [{ id: "idche3", name: "ФИЛИАЛ ЮУРГУ (НИУ)", bgImageUrl: "/bundles/app/css/img/university/logo/susu.jpg" }]
   },
   {
     location: { latitude: 54.8453476, longitude: 83.0904755 },
     city: "NOVOSIBIRSK",
     universities: [
-      { id: "idnvs1", name: "НГУ", bgImageUrl: "/assets/nsu.png" },
-      { id: "idnvs2", name: "НЮИ", bgImageUrl: "/assets/nyu.png" }
+      { id: "idnvs1", name: "НГУ", bgImageUrl: "/bundles/app/css/img/university/logo/nsu.jpg" },
+      { id: "idnvs2", name: "НЮИ", bgImageUrl: "/bundles/app/css/img/university/logo/tsu.jpg" }
     ]
   },
   {
     location: { latitude: 54.7242934, longitude: 20.5252919 },
     city: "KALININGRAD",
-    universities: [{ id: "idkgd1", name: "Балтийский федеральный университет имени Иммануила Канта", bgImageUrl: "/assets/bsukanta.png" }]
+    universities: [
+      {
+        id: "idkgd1",
+        name: "Балтийский федеральный университет имени Иммануила Канта",
+        bgImageUrl: "/bundles/app/css/img/university/logo/ikbfu.jpg"
+      }
+    ]
   },
   {
     location: { latitude: 43.4335161, longitude: 39.9156999 },
     city: "SOCHI",
-    universities: [{ id: "idnkda1", name: "Сочинский институт Российского универсиета дружбы народов", bgImageUrl: "/assets/rudnsochi.png" }]
+    universities: [
+      {
+        id: "idnkda1",
+        name: "Сочинский институт Российского универсиета дружбы народов",
+        bgImageUrl: "/bundles/app/css/img/university/logo/rudn.jpg"
+      }
+    ]
   },
   {
     location: { latitude: 55.790447, longitude: 49.1192462 },
     city: "KAZAN",
-    universities: [{ id: "idta1", name: "КФУ", bgImageUrl: "/assets/kfu.png" }]
+    universities: [{ id: "idta1", name: "КФУ", bgImageUrl: "/bundles/app/css/img/university/logo/kfu.jpg" }]
   },
   {
     location: { latitude: 43.0244636, longitude: 131.8916229 },
     city: "RUSSKIOSTROV",
-    universities: [{ id: "idpri1", name: "ДВФУ", bgImageUrl: "/assets/dvfu.png" }]
+    universities: [{ id: "idpri1", name: "ДВФУ", bgImageUrl: "/bundles/app/css/img/university/logo/fefu.jpg" }]
   },
   {
     location: { latitude: 56.0099917, longitude: 92.7690147 },
     city: "KRASNOYARSK",
-    universities: [{ id: "idkya1", name: "Сибирский федеральный университет", bgImageUrl: "/assets/SibFU.png" }]
+    universities: [
+      {
+        id: "idkya1",
+        name: "Сибирский федеральный университет",
+        bgImageUrl: "/bundles/app/css/img/university/logo/sibfu.jpg"
+      }
+    ]
   },
   {
     location: { latitude: 60.945878, longitude: 76.5543872 },
     city: "NIZHNEVARTOVSK",
-    universities: [{ id: "idkhm1", name: "ЮУрГУ филиал", bgImageUrl: "/assets/chel.png" }]
+    universities: [{ id: "idkhm1", name: "ЮУрГУ филиал", bgImageUrl: "/bundles/app/css/img/university/logo/susu.jpg" }]
   }
 ];
 
@@ -152,5 +173,9 @@ export default {
 
 * {
   box-sizing: border-box;
+}
+
+body {
+  background: #f6f8fb;
 }
 </style>

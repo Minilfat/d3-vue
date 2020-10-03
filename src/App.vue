@@ -1,13 +1,21 @@
 <template>
   <div id="app">
-    <Map :universities="universities" :selectedUniversity="shownUniversity" @university-changed="showUniversityOnSlider" />
-    <UniversitiesSlider :sliderData="sliderData" :selectedUniversity="selectedUniversity" @university-changed="showUniveristyOnMap" />
+    <div>
+      <Map :universities="universities" :selectedUniversity="shownUniversity" @university-changed="showUniversityOnSlider" />
+    </div>
+    <div>
+      <UniversitiesSlider :sliderData="sliderData" :selectedUniversity="selectedUniversity" @university-changed="showUniveristyOnMap" />
+    </div>
+    <div class="statistics">
+      <UniversitiesStatistics fullName="asdasdasd" />
+    </div>
   </div>
 </template>
 
 <script>
 import Map from "./components/Map/Map.vue";
 import UniversitiesSlider from "./components/UniversitiesSlider/UniversitiesSlider.vue";
+import UniversitiesStatistics from "./components/UniversitiesStatistics/UniversitiesStatistics.vue";
 
 const data = [
   {
@@ -151,7 +159,8 @@ export default {
   name: "App",
   components: {
     Map,
-    UniversitiesSlider
+    UniversitiesSlider,
+    UniversitiesStatistics
   },
   data() {
     return {
@@ -187,5 +196,9 @@ export default {
 
 body {
   background: #f6f8fb;
+}
+
+.statistics {
+  margin-top: 40px;
 }
 </style>

@@ -113,6 +113,7 @@ export default {
 .carousel-controls {
   margin: 20px 10px 10px 10px;
   width: 48px;
+  min-width: 48px;
   height: 36px;
   cursor: pointer;
 }

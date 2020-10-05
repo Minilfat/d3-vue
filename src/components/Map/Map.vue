@@ -1,5 +1,5 @@
 <template>
-  <div id="map"></div>
+  <div id="universities-map" class="d-flex justify-content-center"></div>
 </template>
 
 <script>
@@ -230,7 +230,7 @@ export default {
 
       this.path = d3.geoPath().projection(this.projection);
       this.svg = d3
-        .select("#map")
+        .select("#universities-map")
         .append("svg")
         .attr("width", w + "px")
         .attr("height", h + "px");
@@ -273,11 +273,11 @@ export default {
 </script>
 
 <style>
-#map .region {
+#universities-map .region {
   fill: url(#bgImage);
 }
 
-#map .line {
+#universities-map .line {
   fill: none;
   stroke: #e73d73;
   stroke-width: 3;

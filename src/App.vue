@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Header />
     <div>
       <Map :universities="universities" :selectedUniversity="shownUniversity" @university-changed="showUniversityOnSlider" />
     </div>
@@ -14,6 +15,7 @@
 
 <script>
 import Map from "./components/Map/Map.vue";
+import Header from "./components/Header/Header.vue";
 import UniversitiesSlider from "./components/UniversitiesSlider/UniversitiesSlider.vue";
 import UniversitiesStatistics from "./components/UniversitiesStatistics/UniversitiesStatistics.vue";
 
@@ -510,6 +512,7 @@ export default {
   name: "App",
   components: {
     Map,
+    Header,
     UniversitiesSlider,
     UniversitiesStatistics,
   },
@@ -545,19 +548,12 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
 * {
   box-sizing: border-box;
 }
 
 body {
+  margin: 0;
   background: #f6f8fb;
 }
 

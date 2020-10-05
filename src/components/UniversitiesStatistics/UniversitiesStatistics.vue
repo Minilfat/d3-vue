@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="uni-full-name-wrapper">
+    <div>
       <div class="uni-full-name">
         <transition name="uni-full-name-fade">
           <div v-if="shown">
@@ -9,29 +9,41 @@
         </transition>
       </div>
     </div>
-    <div class="statistics-block">
+    <div class="d-flex justify-content-center statistics-block">
       <div class="statistics-block-item">
-        <div class="statistics-block-item__number"><AnimatedInteger :value="_getIntValue(statistics.programs)" /></div>
+        <div class="d-flex justify-content-center align-items-center statistics-block-item__number">
+          <AnimatedInteger :value="_getIntValue(statistics.programs)" />
+        </div>
         <div class="statistics-block-item__label">{{ $t("slider_programs") }}</div>
       </div>
       <div class="statistics-block-item">
-        <div class="statistics-block-item__number"><AnimatedInteger :value="_getIntValue(statistics.foreign_programs)" /></div>
+        <div class="d-flex justify-content-center align-items-center statistics-block-item__number">
+          <AnimatedInteger :value="_getIntValue(statistics.foreign_programs)" />
+        </div>
         <div class="statistics-block-item__label">{{ $t("slider_foreign_programs") }}</div>
       </div>
       <div class="statistics-block-item">
-        <div class="statistics-block-item__number"><AnimatedInteger :value="_getIntValue(statistics.students)" /></div>
+        <div class="d-flex justify-content-center align-items-center statistics-block-item__number">
+          <AnimatedInteger :value="_getIntValue(statistics.students)" />
+        </div>
         <div class="statistics-block-item__label">{{ $t("slider_students") }}</div>
       </div>
       <div class="statistics-block-item">
-        <div class="statistics-block-item__number"><AnimatedInteger :value="_getIntValue(statistics.foreign_students)" /></div>
+        <div class="d-flex justify-content-center align-items-center statistics-block-item__number">
+          <AnimatedInteger :value="_getIntValue(statistics.foreign_students)" />
+        </div>
         <div class="statistics-block-item__label">{{ $t("slider_foreign_students") }}</div>
       </div>
       <div class="statistics-block-item">
-        <div class="statistics-block-item__number"><AnimatedInteger :value="_getIntValue(statistics.staff)" /></div>
+        <div class="d-flex justify-content-center align-items-center statistics-block-item__number">
+          <AnimatedInteger :value="_getIntValue(statistics.staff)" />
+        </div>
         <div class="statistics-block-item__label">{{ $t("slider_staff") }}</div>
       </div>
       <div class="statistics-block-item">
-        <div class="statistics-block-item__number"><AnimatedInteger :value="_getIntValue(statistics.laboratories)" /></div>
+        <div class="d-flex justify-content-center align-items-center statistics-block-item__number">
+          <AnimatedInteger :value="_getIntValue(statistics.laboratories)" />
+        </div>
         <div class="statistics-block-item__label">{{ $t("slider_laboratories") }}</div>
       </div>
     </div>
@@ -83,10 +95,6 @@ export default {
 
 <style scoped>
 .statistics-block {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
   margin: 10px 0;
 }
 
@@ -103,10 +111,6 @@ export default {
   width: 100%;
   height: 60px;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   font: 48px/24px OfficinaSansExtraBoldC;
   letter-spacing: 0px;
   color: #087eca;
@@ -118,14 +122,6 @@ export default {
   text-align: center;
   letter-spacing: 0px;
   color: #000000de;
-}
-
-.uni-full-name-wrapper {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .uni-full-name {

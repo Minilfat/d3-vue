@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="d-flex flex-column align-items-center">
     <div class="circle" :class="{ active: isActive }">
       <img :src="bgImage" alt="uni" />
     </div>
@@ -18,20 +18,12 @@ export default {
   props: {
     isActive: Boolean,
     bgImage: String,
-    name: String
-  }
+    name: String,
+  },
 };
 </script>
 
 <style scoped>
-.wrapper {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .circle {
   width: 80px;
   height: 80px;

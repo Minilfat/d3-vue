@@ -1,9 +1,15 @@
 <template>
   <div>
-    <div class="carousel-view">
+    <div class="d-flex justify-content-center align-items-center">
       <div class="carousel-controls left" @click="previous"></div>
-      <transition-group class="carousel" name="uni-list" tag="div" delay="100">
-        <div v-for="(uni, i) in data" :key="uni.id" class="uni-list-item" :id="uni.id" @click="_gotToUniversity(uni.id, i)">
+      <transition-group class="d-flex justify-content-center aling-items-end carousel" name="uni-list" tag="div" delay="100">
+        <div
+          class="d-flex flex-column align-items-center justify-content-center uni-list-item"
+          v-for="(uni, i) in data"
+          :key="uni.id"
+          :id="uni.id"
+          @click="_gotToUniversity(uni.id, i)"
+        >
           <UniversitiesSliderItem :name="uni.name" :isActive="Math.floor(data.length / 2) === i" :bgImage="uni.bgImageUrl" />
         </div>
       </transition-group>
@@ -103,12 +109,6 @@ export default {
 </script>
 
 <style scoped>
-.carousel-view {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .carousel-controls {
   margin: 20px 10px 10px 10px;
   width: 48px;
@@ -128,11 +128,7 @@ export default {
 }
 
 .carousel {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
   overflow: hidden;
-
   width: 80vw;
   max-width: 960px;
   height: 160px;
@@ -158,12 +154,7 @@ export default {
 
 .uni-list-item {
   min-width: 98px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   margin: 5px;
-
   transition: all 0.6s;
 }
 

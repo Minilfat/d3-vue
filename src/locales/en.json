@@ -1,3 +1,8 @@
 {
-  "message": "hello i18n !!"
+  "slider_programs": "Academic programs",
+  "slider_foreign_programs": "International Programs",
+  "slider_laboratories": "International laboratories",
+  "slider_foreign_students": "Foreign students",
+  "slider_staff": "Researches and Staff",
+  "slider_students": "Students"
 }

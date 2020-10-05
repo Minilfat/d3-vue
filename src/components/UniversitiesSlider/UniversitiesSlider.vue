@@ -17,8 +17,7 @@
 /* eslint-disable no-unused-vars */
 
 import UniversitiesSliderItem from "./UniversitiesSliderItem";
-
-const MOVE_DURATION = 600;
+import { TRANSITION_DURATION } from "../../constants";
 
 export default {
   name: "UniversitiesSlider",
@@ -62,7 +61,7 @@ export default {
       this.isMoving = true;
       setTimeout(() => {
         this.isMoving = false;
-      }, MOVE_DURATION);
+      }, 2 * TRANSITION_DURATION);
     },
 
     _gotToUniversity(id, index) {
@@ -172,18 +171,4 @@ export default {
 .uni-list-leave-to {
   opacity: 0;
 }
-
-/* .carousel:nth-of-type(1) {
-  flex-basis: calc(50% - 100px);
-  justify-content: flex-end;
-}
-
-.carousel:nth-of-type(2) {
-  width: 100px;
-}
-
-.carousel:nth-of-type(3) {
-  flex-basis: calc(50% - 100px);
-  justify-content: flex-start;
-} */
 </style>

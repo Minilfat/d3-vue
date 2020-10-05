@@ -1,3 +1,8 @@
 {
-  "message": "здарова"
+  "slider_programs": "Образовательных программ",
+  "slider_foreign_programs": "Международных программ",
+  "slider_laboratories": "Международных лабораторий",
+  "slider_foreign_students": "Иностранных студентов",
+  "slider_staff": "Преподавателей и исследователей",
+  "slider_students": "Студентов"
 }

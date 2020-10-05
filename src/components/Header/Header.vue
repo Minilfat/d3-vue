@@ -1,7 +1,9 @@
 <template>
   <div class="d-flex header-wrapper">
     <div class="header-item header-logo d-flex justify-content-center align-items-center"><img :src="getLogoUrl()" alt="logo" /></div>
-    <div class="header-item flex-grow-1"></div>
+    <div class="header-item flex-grow-1">
+      <HeaderMenuItem />
+    </div>
     <div class="header-item header-account d-flex align-items-center">
       <img src="/img/login.svg" alt="login" />
       <div class="login-label">
@@ -15,8 +17,13 @@
 </template>
 
 <script>
+import HeaderMenuItem from "./HeaderMenuItem";
+
 export default {
   name: "Header",
+  components: {
+    HeaderMenuItem,
+  },
   methods: {
     getLogoUrl() {
       return `/img/logo-${this.$i18n.locale}.svg`;

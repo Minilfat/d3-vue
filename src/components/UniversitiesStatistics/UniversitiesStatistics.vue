@@ -11,6 +11,8 @@
 </template>
 
 <script>
+const TRANSITION_DURATION = 300;
+
 export default {
   name: "UniversitiesStatistics",
   props: {
@@ -30,7 +32,7 @@ export default {
         this.shown = false;
         setTimeout(() => {
           this.shown = true;
-        }, 300);
+        }, TRANSITION_DURATION);
       }
     },
   },

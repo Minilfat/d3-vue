@@ -251,7 +251,7 @@ export default {
         .attr("height", h + "px")
         .attr("patternUnits", "userSpaceOnUse");
 
-      pattern.append("image").attr("href", "/images/bg.png");
+      pattern.append("image").attr("href", "/img/bg.png");
     },
   },
 

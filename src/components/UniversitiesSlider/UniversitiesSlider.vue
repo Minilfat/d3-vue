@@ -23,16 +23,16 @@ const MOVE_DURATION = 600;
 export default {
   name: "UniversitiesSlider",
   components: {
-    UniversitiesSliderItem
+    UniversitiesSliderItem,
   },
   props: {
     sliderData: Array,
-    selectedUniversity: String
+    selectedUniversity: String,
   },
   data() {
     return {
       data: this.sliderData,
-      isMoving: false
+      isMoving: false,
     };
   },
   methods: {
@@ -83,7 +83,7 @@ export default {
     _changeUniversity() {
       const { id } = this.data[Math.floor(this.data.length / 2)];
       this.$emit("university-changed", id);
-    }
+    },
   },
 
   mounted() {
@@ -94,12 +94,12 @@ export default {
 
   watch: {
     selectedUniversity(id) {
-      const index = this.data.findIndex(uni => uni.id === id);
+      const index = this.data.findIndex((uni) => uni.id === id);
       if (index >= 0) {
         this._gotToUniversity(id, index);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -120,12 +120,12 @@ export default {
 
 .carousel-controls.left {
   margin-right: 40px;
-  background-image: url("/images/sliderLeftControl.svg");
+  background-image: url("/img/sliderLeftControl.svg");
 }
 
 .carousel-controls.right {
   margin-left: 40px;
-  background-image: url("/images/sliderRigthControl.svg");
+  background-image: url("/img/sliderRigthControl.svg");
 }
 
 .carousel {
@@ -149,7 +149,7 @@ export default {
   content: " ";
   width: 120px;
   height: 22px;
-  background: url("/images/carouselActiveBottom.svg");
+  background: url("/img/carouselActiveBottom.svg");
   position: absolute;
   left: 0;
   right: 0;

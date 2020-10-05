@@ -14,20 +14,20 @@ const h = 520;
 
 const CIRCLE_PROPS = {
   r: 6,
-  fill: "#e73d73"
+  fill: "#e73d73",
 };
 
 const MAP_POINT = {
   w: 52,
   h: 74,
-  fill: "#e73d73"
+  fill: "#e73d73",
 };
 
 export default {
   name: "Map",
   props: {
     universities: Array,
-    selectedUniversity: String
+    selectedUniversity: String,
   },
   data() {
     return {
@@ -36,7 +36,7 @@ export default {
       svgG: null,
       projection: null,
       path: null,
-      publicPath: process.env.BASE_URL
+      publicPath: process.env.BASE_URL,
     };
   },
   methods: {
@@ -55,32 +55,36 @@ export default {
         .data(this.universities)
         .enter()
         .append("g")
-        .attr("class", d => `${d.city} city-point`)
+        .attr("class", (d) => `${d.city} city-point`)
         .style("cursor", "pointer")
-        .attr("transform", d => `translate(${this.projection([d.location.longitude, d.location.latitude])})`)
-        .on("click", function(e, d) {
+        .attr("transform", (d) => `translate(${this.projection([d.location.longitude, d.location.latitude])})`)
+        .on("click", function (e, d) {
           vm.cityClickedHandler(this, d);
         });
 
-      this.universitiesСities
-        .append("circle")
-        .classed("city-point-circle", true)
-        .attr("r", CIRCLE_PROPS.r)
-        .attr("fill", CIRCLE_PROPS.fill);
+      this.universitiesСities.append("circle").classed("city-point-circle", true).attr("r", CIRCLE_PROPS.r).attr("fill", CIRCLE_PROPS.fill);
     },
 
     cityClickedHandler(node, data) {
       if (data.universities.length === 1) {
+        this.removeSuggestions();
         this.hideCity(node);
         this.showUniversity(data.universities[0].id);
       } else {
+        // console.log(this.svgG.select(".suggested-universities"));
+        this.removeSuggestions();
         this.suggestUniversities(node, data.universities);
       }
     },
 
+    removeSuggestions() {
+      const previousSuggestions = this.svgG.select(".suggested-universities");
+      previousSuggestions.remove();
+    },
+
     suggestUniversities(node, universities) {
       const total = universities.length;
-      const wrapper = d3.select(node).append("g");
+      const wrapper = d3.select(node).append("g").classed("suggested-universities", true);
       const dx = 8;
       const dy = 20;
       const lineLength = 50;
@@ -90,13 +94,13 @@ export default {
       const initialLine = [
         { x: 0, y: 0 },
         { x: -dx, y: -dy },
-        { x: dx, y: -dy }
+        { x: dx, y: -dy },
       ];
 
       const line = d3
         .line()
-        .x(d => d.x)
-        .y(d => d.y);
+        .x((d) => d.x)
+        .y((d) => d.y);
 
       const animationDuration = 500;
       const path = wrapper
@@ -132,7 +136,7 @@ export default {
           .duration(animationDuration)
           .style("opacity", 1);
 
-        circle.on("click", e => {
+        circle.on("click", (e) => {
           e.stopPropagation();
           wrapper
             .transition()
@@ -151,7 +155,7 @@ export default {
             .append("path")
             .datum([
               { x: lineStart, y: -dy },
-              { x: lineStart + 2 * dx, y: -dy }
+              { x: lineStart + 2 * dx, y: -dy },
             ])
             .attr("class", "line")
             .attr("d", line)
@@ -179,10 +183,7 @@ export default {
       const hiddenCity = d3.select(".city-point circle.hidden");
       if (hiddenCity.node()) hiddenCity.classed("hidden", false).style("cursor", "pointer");
 
-      d3.select(node)
-        .select("circle")
-        .classed("hidden", true)
-        .style("cursor", "default");
+      d3.select(node).select("circle").classed("hidden", true).style("cursor", "default");
     },
 
     addUniversitiesToCities() {
@@ -193,7 +194,7 @@ export default {
           .data(universities)
           .enter()
           .append("g")
-          .attr("id", d => d.id)
+          .attr("id", (d) => d.id)
           .attr("transform", `translate(${-MAP_POINT.w / 2}, ${-MAP_POINT.h})`)
           .classed("university", true)
           .each(({ id, bgImageUrl }) => {
@@ -236,10 +237,7 @@ export default {
 
       this.svg.append("defs");
       this.svgG = this.svg.append("g");
-      this.svgG
-        .attr("class", "region")
-        .append("path")
-        .attr("d", this.path(borders));
+      this.svgG.attr("class", "region").append("path").attr("d", this.path(borders));
     },
 
     addBg() {
@@ -254,22 +252,23 @@ export default {
         .attr("patternUnits", "userSpaceOnUse");
 
       pattern.append("image").attr("href", "/images/bg.png");
-    }
+    },
   },
 
   watch: {
     selectedUniversity(id) {
       const dad = this.svgG.select(`#${id}`).node().parentNode;
       if (dad) {
+        this.removeSuggestions();
         this.hideCity(dad);
         this.showUniversity(id);
       }
-    }
+    },
   },
 
   mounted() {
     this.loadData();
-  }
+  },
 };
 </script>
 

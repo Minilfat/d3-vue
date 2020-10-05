@@ -1,14 +1,12 @@
 <template>
-  <div class="wrapper">
-    <div class="name">
-      {{ fullName }}
+  <div class="statistics-wrapper">
+    <div class="uni-full-name">
+      <transition name="uni-full-name-fade">
+        <div v-if="shown">
+          {{ fullName }}
+        </div>
+      </transition>
     </div>
-
-    <!-- <transition name="fade">
-      <div class="label" v-if="!isActive">
-        {{ name }}
-      </div>
-    </transition> -->
   </div>
 </template>
 
@@ -17,13 +15,30 @@ export default {
   name: "UniversitiesStatistics",
   props: {
     fullName: String,
-    statistics: Object
-  }
+    statistics: Object,
+  },
+
+  data() {
+    return {
+      shown: true,
+    };
+  },
+
+  watch: {
+    fullName(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        this.shown = false;
+        setTimeout(() => {
+          this.shown = true;
+        }, 300);
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
-.wrapper {
+.statistics-wrapper {
   width: 100%;
   height: 100%;
   display: flex;
@@ -31,10 +46,25 @@ export default {
   align-items: center;
 }
 
-.name {
+.uni-full-name {
   text-align: center;
   font: normal normal normal 24px/24px OfficinaSansMediumC;
   letter-spacing: 0px;
   color: #000000de;
+}
+
+.uni-full-name-fade-enter-active,
+.uni-full-name-fade-leave-active {
+  transition: all 0.3s;
+}
+
+.uni-full-name-fade-enter {
+  transform: translateY(-36px);
+  opacity: 0;
+}
+
+.uni-full-name-fade-leave-to {
+  transform: translateY(30px);
+  opacity: 0;
 }
 </style>

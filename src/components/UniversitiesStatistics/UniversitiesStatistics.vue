@@ -93,7 +93,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .statistics-block {
   margin: 10px 0;
 }
@@ -104,24 +104,24 @@ export default {
   width: 160px;
   height: 160px;
   margin: 0 8px;
-}
 
-.statistics-block-item__number {
-  margin-top: 20px;
-  width: 100%;
-  height: 60px;
+  &__number {
+    margin-top: 20px;
+    width: 100%;
+    height: 60px;
 
-  font: 48px/24px OfficinaSansExtraBoldC;
-  letter-spacing: 0px;
-  color: #087eca;
-}
+    font: 48px/24px OfficinaSansExtraBoldC;
+    letter-spacing: 0px;
+    color: #087eca;
+  }
 
-.statistics-block-item__label {
-  margin-top: 20px;
-  font: 20px/24px OfficinaSansC;
-  text-align: center;
-  letter-spacing: 0px;
-  color: #000000de;
+  &__label {
+    margin-top: 20px;
+    font: 20px/24px OfficinaSansC;
+    text-align: center;
+    letter-spacing: 0px;
+    color: #000000de;
+  }
 }
 
 .uni-full-name {
@@ -129,20 +129,20 @@ export default {
   font: normal normal normal 24px/24px OfficinaSansMediumC;
   letter-spacing: 0px;
   color: #000000de;
-}
 
-.uni-full-name-fade-enter-active,
-.uni-full-name-fade-leave-active {
-  transition: all 0.3s;
-}
+  &-fade-enter-active,
+  &-fade-leave-active {
+    transition: all 0.3s;
+  }
 
-.uni-full-name-fade-enter {
-  transform: translateY(-36px);
-  opacity: 0;
-}
+  &-fade-enter {
+    transform: translateY(-36px);
+    opacity: 0;
+  }
 
-.uni-full-name-fade-leave-to {
-  transform: translateY(20px);
-  opacity: 0;
+  &-fade-leave-to {
+    transform: translateY(20px);
+    opacity: 0;
+  }
 }
 </style>

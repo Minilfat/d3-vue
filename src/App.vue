@@ -540,9 +540,6 @@ export default {
       this.universityInfo = this.universitiesStatistics[id];
       this.shownUniversity = id;
     },
-    changeLocale() {
-      this.$i18n.locale = this.$i18n.locale === "ru" ? "en" : "ru";
-    },
   },
 };
 </script>

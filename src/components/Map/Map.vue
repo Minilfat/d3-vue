@@ -272,34 +272,40 @@ export default {
 };
 </script>
 
-<style>
-#universities-map .region {
-  fill: url(#bgImage);
+<style lang="scss">
+#universities-map {
+  .region {
+    fill: url(#bgImage);
+  }
+
+  .line {
+    fill: none;
+    stroke: #e73d73;
+    stroke-width: 3;
+  }
 }
 
-#universities-map .line {
-  fill: none;
-  stroke: #e73d73;
-  stroke-width: 3;
-}
+.city-point {
+  circle {
+    &.city-point-circle {
+      fill-opacity: 1;
+      transition: fill-opacity 500ms linear;
 
-.city-point circle.city-point-circle {
-  fill-opacity: 1;
-  transition: fill-opacity 500ms linear;
-}
+      &.hidden {
+        fill-opacity: 0;
+      }
+    }
+  }
 
-.city-point circle.city-point-circle.hidden {
-  fill-opacity: 0;
-}
+  .university {
+    opacity: 0;
+    transition: opacity 500ms linear;
+    visibility: hidden;
 
-.city-point .university {
-  opacity: 0;
-  transition: opacity 500ms linear;
-  visibility: hidden;
-}
-
-.city-point .university.shown {
-  opacity: 1;
-  visibility: visible;
+    &.shown {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 }
 </style>

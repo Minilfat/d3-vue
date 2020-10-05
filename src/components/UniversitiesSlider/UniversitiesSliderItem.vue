@@ -23,27 +23,26 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .circle {
   width: 80px;
   height: 80px;
   border-radius: 50%;
   margin-bottom: 5px;
-}
 
-.circle img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
+  &.active {
+    width: 120px;
+    height: 120px;
+    background-color: #ffffff;
+    border: 4px solid #e61973;
+    transition: all 0.5s ease-in;
+  }
 
-.circle.active {
-  width: 120px;
-  height: 120px;
-  background-color: #ffffff;
-  border: 4px solid #e61973;
-
-  transition: all 0.5s ease-in;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
 }
 
 .label {
@@ -55,13 +54,15 @@ export default {
   color: #000000de;
 }
 
-.fade-leave-active {
-  transition: all 0.49s ease-out;
-  height: 23px;
-}
+.fade-leave {
+  &-active {
+    transition: all 0.49s ease-out;
+    height: 23px;
+  }
 
-.fade-leave-to {
-  opacity: 0;
-  height: 0px;
+  &-to {
+    opacity: 0;
+    height: 0px;
+  }
 }
 </style>

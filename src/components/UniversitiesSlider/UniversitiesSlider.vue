@@ -108,25 +108,7 @@ export default {
 };
 </script>
 
-<style scoped>
-.carousel-controls {
-  margin: 20px 10px 10px 10px;
-  width: 48px;
-  min-width: 48px;
-  height: 36px;
-  cursor: pointer;
-}
-
-.carousel-controls.left {
-  margin-right: 40px;
-  background-image: url("/img/sliderLeftControl.svg");
-}
-
-.carousel-controls.right {
-  margin-left: 40px;
-  background-image: url("/img/sliderRigthControl.svg");
-}
-
+<style scoped lang="scss">
 .carousel {
   overflow: hidden;
   width: 80vw;
@@ -134,32 +116,52 @@ export default {
   height: 160px;
   padding-bottom: 6px;
   border-bottom: 2px solid #087eca;
+
+  &-active-bottom {
+    position: relative;
+
+    &::before {
+      content: " ";
+      width: 120px;
+      height: 22px;
+      background: url("/img/carouselActiveBottom.svg");
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -2px;
+      margin: auto;
+    }
+  }
+
+  &-controls {
+    margin: 20px 10px 10px 10px;
+    width: 48px;
+    min-width: 48px;
+    height: 36px;
+    cursor: pointer;
+
+    &.left {
+      margin-right: 40px;
+      background-image: url("/img/sliderLeftControl.svg");
+    }
+
+    &.right {
+      margin-left: 40px;
+      background-image: url("/img/sliderRigthControl.svg");
+    }
+  }
 }
 
-.carousel-active-bottom {
-  position: relative;
-}
+.uni-list {
+  &-item {
+    min-width: 98px;
+    margin: 5px;
+    transition: all 0.6s;
+  }
 
-.carousel-active-bottom::before {
-  content: " ";
-  width: 120px;
-  height: 22px;
-  background: url("/img/carouselActiveBottom.svg");
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -2px;
-  margin: auto;
-}
-
-.uni-list-item {
-  min-width: 98px;
-  margin: 5px;
-  transition: all 0.6s;
-}
-
-.uni-list-enter,
-.uni-list-leave-to {
-  opacity: 0;
+  &-enter,
+  &-leave-to {
+    opacity: 0;
+  }
 }
 </style>

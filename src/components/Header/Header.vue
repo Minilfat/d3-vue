@@ -173,14 +173,12 @@
 <script>
 /* eslint-disable no-unused-vars */
 
-import HeaderMenuItem from "./HeaderMenuItem";
 import HeaderMenuList from "./HeaderMenuList";
 
 export default {
   name: "Header",
   components: {
     HeaderMenuList,
-    // HeaderMenuItem,
   },
   data() {
     return {

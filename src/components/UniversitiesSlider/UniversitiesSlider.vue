@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="d-flex justify-content-center align-items-center">
-      <div class="carousel-controls left" @click="previous"></div>
-      <transition-group class="d-flex justify-content-center aling-items-end carousel" name="uni-list" tag="div">
+      <div class="slider-controls left" @click="previous"></div>
+      <transition-group class="d-flex justify-content-center aling-items-end slider" name="uni-list" tag="div">
         <div
           class="d-flex flex-column align-items-center justify-content-center uni-list-item"
           v-for="(uni, i) in data"
@@ -17,9 +17,9 @@
           <UniversitiesSliderItem :name="uni.name" :isActive="Math.floor(data.length / 2) === i" :bgImage="uni.bgImageUrl" />
         </div>
       </transition-group>
-      <div class="carousel-controls right" @click="next"></div>
+      <div class="slider-controls right" @click="next"></div>
     </div>
-    <div class="carousel-active-bottom"></div>
+    <div class="slider-active-bottom"></div>
   </div>
 </template>
 
@@ -120,10 +120,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.carousel {
+.slider {
   overflow: hidden;
   width: 80vw;
-  max-width: 820px;
+  max-width: 800px;
   height: 160px;
   border-bottom: 2px solid #087eca;
 

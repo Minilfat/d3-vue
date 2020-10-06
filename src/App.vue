@@ -2,10 +2,17 @@
   <div id="app">
     <Header />
     <div>
+      <Carousel />
+    </div>
+    <div>
       <Map :universities="universities" :selectedUniversity="shownUniversity" @university-changed="showUniversityOnSlider" />
     </div>
     <div>
-      <UniversitiesSlider :sliderData="sliderData" :selectedUniversity="selectedUniversity" @university-changed="showUniveristyOnMap" />
+      <UniversitiesSlider
+        :sliderData="sliderData"
+        :selectedUniversity="selectedUniversity"
+        @university-changed="showUniveristyOnMap"
+      />
     </div>
     <div class="statistics">
       <UniversitiesStatistics :universityInfo="universityInfo" />
@@ -16,6 +23,7 @@
 <script>
 import Map from "./components/Map/Map.vue";
 import Header from "./components/Header/Header.vue";
+import Carousel from "./components/Carousel/Carousel.vue";
 import UniversitiesSlider from "./components/UniversitiesSlider/UniversitiesSlider.vue";
 import UniversitiesStatistics from "./components/UniversitiesStatistics/UniversitiesStatistics.vue";
 
@@ -513,6 +521,7 @@ export default {
   components: {
     Map,
     Header,
+    Carousel,
     UniversitiesSlider,
     UniversitiesStatistics,
   },

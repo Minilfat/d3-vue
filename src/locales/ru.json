@@ -44,5 +44,9 @@
   "middle-menu.partners": "Партнёры",
   "middle-menu.static_pages": "Статические страницы",
   "middle-menu.personality": "Персоналии",
-  "middle-menu.association_projects": "Проекты Ассоциации"
+  "middle-menu.association_projects": "Проекты Ассоциации",
+  "bachelor": "Бакалавриат",
+  "master": "Магистратура",
+  "postgraduate": "Аспирантура",
+  "n_specialty": "Специалитет"
 }

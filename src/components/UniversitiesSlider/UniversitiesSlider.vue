@@ -134,7 +134,7 @@ export default {
       content: " ";
       width: 120px;
       height: 22px;
-      background: url("/img/carouselActiveBottom.svg");
+      background: url("/img/carousel-active-bottom.svg");
       position: absolute;
       left: 0;
       right: 0;
@@ -152,12 +152,12 @@ export default {
 
     &.left {
       margin-right: 40px;
-      background-image: url("/img/sliderLeftControl.svg");
+      background-image: url("/img/slider-left-control.svg");
     }
 
     &.right {
       margin-left: 40px;
-      background-image: url("/img/sliderRigthControl.svg");
+      background-image: url("/img/slider-right-control.svg");
     }
   }
 }

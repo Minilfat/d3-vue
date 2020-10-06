@@ -43,5 +43,10 @@
   "middle-menu.partners": "Partners",
   "middle-menu.static_pages": "Static Pages",
   "middle-menu.personality": "Users",
-  "middle-menu.association_projects": "Association Projects"
+  "middle-menu.association_projects": "Association Projects",
+  "middle-menu.masterclasses": "Workshops",
+  "bachelor": "Bachelor",
+  "master": "Master's",
+  "postgraduate": "Postgraduate",
+  "n_specialty": "Specialist"
 }

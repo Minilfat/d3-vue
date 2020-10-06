@@ -1,5 +1,5 @@
 <template>
-  <div id="universities-map" class="d-flex justify-content-center"></div>
+  <div id="universities-map"></div>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ import * as topojson from "topojson-client";
 import topologyMap from "./russia.json";
 import { addBackgroundImagePattern } from "./helpers";
 
-const w = 964;
+const w = 960;
 const h = 520;
 
 const CIRCLE_PROPS = {
@@ -274,6 +274,9 @@ export default {
 
 <style lang="scss">
 #universities-map {
+  width: 960px;
+  margin: auto;
+
   .region {
     fill: url(#bgImage);
   }

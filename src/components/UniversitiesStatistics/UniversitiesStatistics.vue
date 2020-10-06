@@ -111,7 +111,6 @@ export default {
     height: 60px;
 
     font: 48px/24px OfficinaSansExtraBoldC;
-    letter-spacing: 0px;
     color: #087eca;
   }
 
@@ -119,15 +118,13 @@ export default {
     margin-top: 20px;
     font: 20px/24px OfficinaSansC;
     text-align: center;
-    letter-spacing: 0px;
     color: #000000de;
   }
 }
 
 .uni-full-name {
   text-align: center;
-  font: normal normal normal 24px/24px OfficinaSansMediumC;
-  letter-spacing: 0px;
+  font: 24px/24px OfficinaSansMediumC;
   color: #000000de;
 
   &-fade-enter-active,

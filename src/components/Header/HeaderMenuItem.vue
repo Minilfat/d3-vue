@@ -34,7 +34,6 @@ export default {
   clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
 
   &-inner {
-    content: "";
     width: calc(100% - 4px);
     height: 46px;
 

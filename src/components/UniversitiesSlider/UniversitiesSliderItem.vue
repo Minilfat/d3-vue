@@ -47,10 +47,10 @@ export default {
 
 .label {
   height: 23px;
-  overflow-y: hidden;
+  max-width: 90px;
+  overflow: hidden;
   text-align: center;
   font: normal normal normal 14px/24px OfficinaSansMediumC;
-  letter-spacing: 0px;
   color: #000000de;
 }
 

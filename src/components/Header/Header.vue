@@ -2,7 +2,20 @@
   <div class="d-flex header-wrapper">
     <div class="header-item header-logo d-flex justify-content-center align-items-center"><img :src="getLogoUrl()" alt="logo" /></div>
     <div class="header-item flex-grow-1">
-      <HeaderMenuItem />
+      <div class="header-nav-menu d-flex ml-auto align-items-center">
+        <div class="header-nav-menu__item">
+          <div class="header-nav-menu__item-label">{{ $t("middle-menu.association") }}</div>
+        </div>
+        <div class="header-nav-menu__item">
+          <div class="header-nav-menu__item-label">{{ $t("middle-menu.news") }}</div>
+        </div>
+        <div class="header-nav-menu__item">
+          <div class="header-nav-menu__item-label">{{ $t("middle-menu.science") }}</div>
+        </div>
+        <div class="header-nav-menu__item">
+          <div class="header-nav-menu__item-label">{{ $t("middle-menu.education") }}</div>
+        </div>
+      </div>
     </div>
     <div class="header-item header-account d-flex align-items-center">
       <img src="/img/login.svg" alt="login" />
@@ -17,12 +30,14 @@
 </template>
 
 <script>
+/* eslint-disable no-unused-vars */
+
 import HeaderMenuItem from "./HeaderMenuItem";
 
 export default {
   name: "Header",
   components: {
-    HeaderMenuItem,
+    // HeaderMenuItem,
   },
   methods: {
     getLogoUrl() {
@@ -114,7 +129,6 @@ export default {
       margin-right: 16px;
       text-align: left;
       font: 18px/24px OfficinaSansC;
-      letter-spacing: 0px;
       color: #ffffff;
     }
   }
@@ -137,6 +151,36 @@ export default {
 
     &::after {
       @include cutRightBottomCorner(15px, #f6f8fb, #0284c5);
+    }
+  }
+
+  &-nav-menu {
+    position: relative;
+    background-color: #0284c5;
+    padding: 0 20px;
+    height: 40px;
+    width: fit-content;
+
+    &::before {
+      @include cutLeftTopCorner(15px, #f6f8fb, #0284c5);
+    }
+
+    &::after {
+      @include cutRightBottomCorner(15px, #f6f8fb, #0284c5);
+    }
+
+    &__item {
+      border-left: 2px solid #fff;
+
+      &-label {
+        padding: 0 20px;
+        font: 18px/24px OfficinaSansBookC;
+        color: #ffffff;
+      }
+
+      &:first-of-type {
+        border-left: none;
+      }
     }
   }
 }

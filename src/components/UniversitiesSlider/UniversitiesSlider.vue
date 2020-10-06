@@ -2,12 +2,16 @@
   <div>
     <div class="d-flex justify-content-center align-items-center">
       <div class="carousel-controls left" @click="previous"></div>
-      <transition-group class="d-flex justify-content-center aling-items-end carousel" name="uni-list" tag="div" delay="100">
+      <transition-group class="d-flex justify-content-center aling-items-end carousel" name="uni-list" tag="div">
         <div
           class="d-flex flex-column align-items-center justify-content-center uni-list-item"
           v-for="(uni, i) in data"
           :key="uni.id"
           :id="uni.id"
+          :class="{
+            margined: isEven && i === data.length - 1,
+            centered: Math.floor(data.length / 2) === i,
+          }"
           @click="_gotToUniversity(uni.id, i)"
         >
           <UniversitiesSliderItem :name="uni.name" :isActive="Math.floor(data.length / 2) === i" :bgImage="uni.bgImageUrl" />
@@ -42,47 +46,48 @@ export default {
   },
   methods: {
     next() {
-      if (this.isMoving) return;
-      this._blockMove();
-
-      const removed = this.data.splice(0, 1)[0];
-      requestAnimationFrame(() => {
-        this.data.push(removed);
-        this._changeUniversity();
-      });
+      if (this._blockMove()) {
+        const removed = this.data.splice(0, 1)[0];
+        requestAnimationFrame(() => {
+          this.data.push(removed);
+          this._changeUniversity();
+        });
+      }
     },
 
     previous() {
-      if (this.isMoving) return;
-      this._blockMove();
-
-      const removed = this.data.splice(this.data.length - 1, 1)[0];
-      requestAnimationFrame(() => {
-        this.data.unshift(removed);
-        this._changeUniversity();
-      });
+      if (this._blockMove()) {
+        const removed = this.data.splice(this.data.length - 1, 1)[0];
+        requestAnimationFrame(() => {
+          this.data.unshift(removed);
+          this._changeUniversity();
+        });
+      }
     },
 
     _blockMove() {
+      if (this.isMoving) return false;
+
       this.isMoving = true;
       setTimeout(() => {
         this.isMoving = false;
       }, 2 * TRANSITION_DURATION);
+
+      return true;
     },
 
     _gotToUniversity(id, index) {
-      if (this.isMoving) return;
-      this._blockMove();
+      if (this._blockMove()) {
+        const count = index - Math.floor(this.data.length / 2);
+        const toPut = [];
 
-      const count = index - Math.floor(this.data.length / 2);
-      const toPut = [];
+        for (let i = 0; i < Math.abs(count); i++) toPut.push(count > 0 ? this.data.shift() : this.data.pop());
 
-      for (let i = 0; i < Math.abs(count); i++) toPut.push(count > 0 ? this.data.shift() : this.data.pop());
-
-      requestAnimationFrame(() => {
-        this.data = count > 0 ? this.data.concat(toPut) : toPut.concat(this.data);
-        this._changeUniversity();
-      });
+        requestAnimationFrame(() => {
+          this.data = count > 0 ? this.data.concat(toPut) : toPut.concat(this.data);
+          this._changeUniversity();
+        });
+      }
     },
 
     _changeUniversity() {
@@ -95,6 +100,12 @@ export default {
     this.$nextTick(() => {
       this._changeUniversity();
     });
+  },
+
+  computed: {
+    isEven() {
+      return this.sliderData && this.sliderData.length % 2 === 0;
+    },
   },
 
   watch: {
@@ -112,9 +123,8 @@ export default {
 .carousel {
   overflow: hidden;
   width: 80vw;
-  max-width: 960px;
+  max-width: 820px;
   height: 160px;
-  padding-bottom: 6px;
   border-bottom: 2px solid #087eca;
 
   &-active-bottom {
@@ -154,9 +164,17 @@ export default {
 
 .uni-list {
   &-item {
-    min-width: 98px;
-    margin: 5px;
+    min-width: 80px;
+    margin: 0 2.5px;
     transition: all 0.6s;
+
+    &.centered {
+      min-width: 120px;
+    }
+
+    &.margined {
+      margin-right: 94px;
+    }
   }
 
   &-enter,

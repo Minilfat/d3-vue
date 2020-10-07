@@ -51,6 +51,6 @@
     "not dead"
   ],
   "prettier": {
-    "printWidth": 130
+    "printWidth": 120
   }
 }

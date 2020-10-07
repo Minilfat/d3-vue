@@ -52,5 +52,10 @@
   "main_text": "Find educational and scientific opportunities",
   "main_sub_title": "offer higher education programs, research grants, summer schools, internships, conferences and other types of educational and scientific opportunities",
   "main_sub_title_link": "The 21 universities of the Association",
-  "search": "SEARCH"
+  "search": "SEARCH",
+  "search.projects": "Funding",
+  "search.programs": "Academic Programs",
+  "search.mobility": "Professional Opportunities",
+  "search.keyword": "Enter a keyword, for example, \"engineering\"...",
+  "main.label": "Association Global Universities of Russia"
 }

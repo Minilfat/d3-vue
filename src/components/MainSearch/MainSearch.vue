@@ -13,27 +13,39 @@
     </div>
     <div class="main-search-input-wrapper d-flex">
       <div class="input flex-grow-1 d-flex">
-        <!-- &#x1f50d -->
         <div class="flex-grow-1">
-          <b-form-input
-            id="input-default"
-            placeholder="Enter your name"
-            class="h-100 border-right-0 border-primary"
-          ></b-form-input>
+          <b-input-group class="h-100">
+            <b-input-group-prepend>
+              <span class="input-group-text bg-white border-primary">
+                <img src="/img/search.svg" alt="s" />
+              </span>
+            </b-input-group-prepend>
+            <b-form-input
+              class="h-100 border-right-0 border-left-0 border-primary shadow-none"
+              :placeholder="$t('search.keyword')"
+            >
+            </b-form-input>
+          </b-input-group>
         </div>
-        <b-dropdown split split-class="rounded-0 w-100" split-variant="outline-primary" variant="primary" class="h-100">
+        <b-dropdown
+          split
+          split-class="rounded-0 w-100 bg-white shadow-none"
+          split-variant="outline-primary"
+          variant="primary"
+          class="h-100"
+        >
           <template v-slot:button-content>
             <div class="dropdown-text">
-              <span>{{ dropDownSelected }}</span>
+              <span>{{ $t(dropDownSelected) }}</span>
             </div>
           </template>
 
           <b-dropdown-item v-for="(d, i) in dropDownItems" :key="'index' + i" @click="handleSelectedChanged(d)">
-            {{ d }}
+            {{ $t(d) }}
           </b-dropdown-item>
         </b-dropdown>
       </div>
-      <b-button variant="primary">{{ $t("search") }}</b-button>
+      <b-button variant="primary" class="shadow-none">{{ $t("search") }}</b-button>
     </div>
     <div class="main-search-helpers"></div>
   </div>
@@ -45,7 +57,7 @@ export default {
   props: {},
   data() {
     return {
-      dropDownItems: ["action", "Another action", "Something else here dasasd asadsasd..."],
+      dropDownItems: ["search.projects", "search.programs", "search.mobility"],
       dropDownSelected: "",
     };
   },
@@ -114,22 +126,14 @@ export default {
     .input {
       height: 100%;
 
-      .dropdown {
-        width: 220px;
-        max-width: 220px;
+      input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
 
-        .dropdown-text {
-          max-width: 100%;
-          overflow: hidden;
-          font: 16px/24px OfficinaSansC;
-          color: #373a3c;
-
-          span {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-          }
-        }
+      .dropdown-text {
+        font: 16px/24px OfficinaSansC;
+        color: #373a3c;
       }
     }
 

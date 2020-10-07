@@ -7,8 +7,15 @@
     <div>
       <MainSearch />
     </div>
+    <div class="main-page-universities">
+      <div class="label">{{ $t("main.label") }}</div>
+    </div>
     <div>
-      <Map :universities="universities" :selectedUniversity="shownUniversity" @university-changed="showUniversityOnSlider" />
+      <Map
+        :universities="universities"
+        :selectedUniversity="shownUniversity"
+        @university-changed="showUniversityOnSlider"
+      />
     </div>
 
     <div>
@@ -559,7 +566,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 * {
   box-sizing: border-box;
 }
@@ -571,5 +578,16 @@ body {
 
 .statistics {
   margin-top: 40px;
+}
+
+.main-page-universities {
+  width: 100%;
+  margin: 60px auto;
+  text-align: center;
+
+  .label {
+    font: 32px/24px OfficinaSansMediumC;
+    color: #000000de;
+  }
 }
 </style>

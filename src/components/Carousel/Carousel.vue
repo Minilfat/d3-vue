@@ -3,8 +3,21 @@
     <div class="d-flex justify-content-center align-items-center carousel-wrapper">
       <div class="carousel-controls left"></div>
       <div class="carousel-content">
-        <div class="inner">
+        <div class="background-image">
           <img :src="imageUrl" alt="img" />
+        </div>
+        <div class="info">
+          <div class="wrapper d-flex flex-column justify-content-between align-items-center">
+            <div><img src="/img/open-doors.svg" alt="" /></div>
+            <div class="text">
+              Ассоциация проводит ежегодную международную олимпиаду в рамках проекта Open doors для того чтобы тут накопирайтили
+              корректный текст под контент баннера. Можно писать достаточно объёмные описания для тех проектов, которым
+              недостаточно одного абзаца!
+            </div>
+            <div>
+              <b-button variant="primary">УЗНАТЬ БОЛЬШЕ!</b-button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="carousel-controls right"></div>
@@ -32,7 +45,6 @@ export default {
   }
 
   &-controls {
-    // margin: 20px 10px 10px 10px;
     width: 48px;
     min-width: 48px;
     height: 36px;
@@ -57,7 +69,7 @@ export default {
     -webkit-clip-path: polygon(40px 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%, 0 40px);
     clip-path: polygon(40px 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%, 0 40px);
 
-    .inner {
+    .background-image {
       width: calc(100% - 8px);
       height: 442px;
 
@@ -74,32 +86,32 @@ export default {
         height: 100%;
       }
     }
+
+    .info {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 35%;
+      height: calc(100% - 8px);
+      -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - 38px), calc(100% - 38px) 100%, 0 100%);
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 38px), calc(100% - 38px) 100%, 0 100%);
+      background: linear-gradient(0.25turn, transparent, 20%, rgba(0, 0, 0, 0.5));
+
+      .wrapper {
+        height: 100%;
+        padding: 30px 40px 60px;
+
+        .text {
+          font: 14px/16px OfficinaSansMediumC;
+          color: #ffffff;
+        }
+
+        button {
+          font: 16px/24px OfficinaSansBoldC;
+          color: #ffffff;
+        }
+      }
+    }
   }
 }
-
-// .header-menu-item {
-//   position: relative;
-//   cursor: pointer;
-
-//   width: 200px;
-//   height: 50px;
-//   background-color: #f12578;
-
-//   -webkit-clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-//   clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-
-//   &-inner {
-//     width: calc(100% - 4px);
-//     height: 46px;
-
-//     -webkit-clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
-//     clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
-
-//     background-color: #f6f8fb;
-//     display: block;
-//     position: absolute;
-//     top: 2px;
-//     left: 2px;
-//   }
-// }
 </style>

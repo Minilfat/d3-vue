@@ -5,8 +5,12 @@
       <Carousel />
     </div>
     <div>
+      <MainSearch />
+    </div>
+    <div>
       <Map :universities="universities" :selectedUniversity="shownUniversity" @university-changed="showUniversityOnSlider" />
     </div>
+
     <div>
       <UniversitiesSlider
         :sliderData="sliderData"
@@ -24,6 +28,7 @@
 import Map from "./components/Map/Map.vue";
 import Header from "./components/Header/Header.vue";
 import Carousel from "./components/Carousel/Carousel.vue";
+import MainSearch from "./components/MainSearch/MainSearch.vue";
 import UniversitiesSlider from "./components/UniversitiesSlider/UniversitiesSlider.vue";
 import UniversitiesStatistics from "./components/UniversitiesStatistics/UniversitiesStatistics.vue";
 
@@ -522,6 +527,7 @@ export default {
     Map,
     Header,
     Carousel,
+    MainSearch,
     UniversitiesSlider,
     UniversitiesStatistics,
   },

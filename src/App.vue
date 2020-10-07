@@ -28,11 +28,15 @@
     <div class="statistics">
       <UniversitiesStatistics :universityInfo="universityInfo" />
     </div>
+    <div class="news-block">
+      <News />
+    </div>
   </div>
 </template>
 
 <script>
 import Map from "./components/Map/Map.vue";
+import News from "./components/News/News.vue";
 import Header from "./components/Header/Header.vue";
 import Carousel from "./components/Carousel/Carousel.vue";
 import MainSearch from "./components/MainSearch/MainSearch.vue";
@@ -532,6 +536,7 @@ export default {
   name: "App",
   components: {
     Map,
+    News,
     Header,
     Carousel,
     MainSearch,
@@ -589,5 +594,9 @@ body {
     font: 32px/24px OfficinaSansMediumC;
     color: #000000de;
   }
+}
+
+.news-block {
+  margin: 60px auto;
 }
 </style>

@@ -60,7 +60,11 @@
         <div class="header-nav-menu__item" @click="showMenuList('science')">
           <div class="header-nav-menu__item-label">{{ $t("middle-menu.science") }}</div>
           <div class="header-nav-menu__item-list center">
-            <HeaderMenuList :isShown="shownMenuList === 'science'" :label="$t('middle-menu.science')" pointerPosition="center">
+            <HeaderMenuList
+              :isShown="shownMenuList === 'science'"
+              :label="$t('middle-menu.science')"
+              pointerPosition="center"
+            >
               <div class="d-flex">
                 <div class="header-list-content">
                   <div class="label">
@@ -108,7 +112,11 @@
         <div class="header-nav-menu__item" @click="showMenuList('education')">
           <div class="header-nav-menu__item-label">{{ $t("middle-menu.education") }}</div>
           <div class="header-nav-menu__item-list right">
-            <HeaderMenuList :isShown="shownMenuList === 'education'" :label="$t('middle-menu.education')" pointerPosition="right">
+            <HeaderMenuList
+              :isShown="shownMenuList === 'education'"
+              :label="$t('middle-menu.education')"
+              pointerPosition="right"
+            >
               <div class="d-flex">
                 <div class="header-list-content">
                   <div class="label">
@@ -257,14 +265,14 @@ export default {
     cursor: pointer;
     height: 40px;
     min-width: 90px;
-    background-color: #0063a4;
+    background-color: var(--blue-dark);
 
     ::before {
-      @include cutLeftTopCorner(15px, #f6f8fb, #0063a4);
+      @include cutLeftTopCorner(15px, #f6f8fb, var(--blue-dark));
     }
 
     &::after {
-      @include cutRightBottomCorner(15px, #f6f8fb, #0063a4);
+      @include cutRightBottomCorner(15px, #f6f8fb, var(--blue-dark));
     }
 
     img {
@@ -278,7 +286,7 @@ export default {
       margin-right: 16px;
       text-align: left;
       font: 18px/24px OfficinaSansC;
-      color: #ffffff;
+      color: var(--white);
     }
   }
 
@@ -326,7 +334,7 @@ export default {
       &-label {
         padding: 0 20px;
         font: 18px/24px OfficinaSansBookC;
-        color: #ffffff;
+        color: var(--white);
       }
 
       &:first-of-type {
@@ -379,7 +387,7 @@ export default {
             text-decoration: underline;
             font: 16px/24px OfficinaSansMediumC;
             letter-spacing: -0.4px;
-            color: #1c7cd5;
+            color: var(--primary);
           }
         }
       }

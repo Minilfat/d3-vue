@@ -142,7 +142,7 @@ export default {
       margin-left: 10px;
       padding: 0 50px;
       font: 16px/24px OfficinaSansBoldC;
-      color: #ffffff;
+      color: var(--white);
     }
   }
 }

@@ -33,7 +33,7 @@ export default {
   &.active {
     width: 120px;
     height: 120px;
-    background-color: #ffffff;
+    background-color: var(--white);
     border: 4px solid #e61973;
     transition: all 0.5s ease-in;
   }

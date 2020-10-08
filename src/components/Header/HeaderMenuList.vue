@@ -29,9 +29,9 @@ export default {
   width: 480px;
   min-height: 200px;
   height: 100%;
-  background: #ffffff;
+  background: var(--white);
   box-shadow: 0px 10px 20px #0000009c;
-  border: 2px solid #1f9bd6;
+  border: 2px solid var(--blue-main);
   border-radius: 4px;
 
   position: relative;
@@ -64,15 +64,15 @@ export default {
   &-label {
     width: 100%;
     height: 32px;
-    border: 1px solid #ffffff;
-    background-color: #1c7cd5;
+    border: 1px solid var(--white);
+    background-color: var(--primary);
 
     > span {
       display: block;
       margin-left: 14px;
 
       font: 16px/18px OfficinaSansC;
-      color: #ffffff;
+      color: var(--white);
     }
   }
 }

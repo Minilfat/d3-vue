@@ -111,7 +111,7 @@ export default {
     height: 60px;
 
     font: 48px/24px OfficinaSansExtraBoldC;
-    color: #087eca;
+    color: var(--primary);
   }
 
   &__label {

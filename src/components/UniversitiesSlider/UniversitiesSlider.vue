@@ -14,7 +14,11 @@
           }"
           @click="_gotToUniversity(uni.id, i)"
         >
-          <UniversitiesSliderItem :name="uni.name" :isActive="Math.floor(data.length / 2) === i" :bgImage="uni.bgImageUrl" />
+          <UniversitiesSliderItem
+            :name="uni.name"
+            :isActive="Math.floor(data.length / 2) === i"
+            :bgImage="uni.bgImageUrl"
+          />
         </div>
       </transition-group>
       <div class="slider-controls right" @click="next"></div>
@@ -125,7 +129,7 @@ export default {
   width: 80vw;
   max-width: 800px;
   height: 160px;
-  border-bottom: 2px solid #087eca;
+  border-bottom: 2px solid var(--primary);
 
   &-active-bottom {
     position: relative;

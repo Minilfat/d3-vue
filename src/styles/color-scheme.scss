@@ -7,6 +7,8 @@ $danger: #dc3545;
 $light: #f8f9fa;
 $dark: #343a40;
 $brand: #f12578;
+$blue-dark: #0063a4;
+$blue-main: #1f9bd6;
 
 $theme-colors: () !default;
 $theme-colors: map-merge(
@@ -20,6 +22,8 @@ $theme-colors: map-merge(
     "light": $light,
     "dark": $dark,
     "brand": $brand,
+    "blue-dark": $blue-dark,
+    "blue-main": $blue-main,
   ),
   $theme-colors
 );

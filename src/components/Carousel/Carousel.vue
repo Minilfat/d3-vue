@@ -10,9 +10,9 @@
           <div class="wrapper d-flex flex-column justify-content-between align-items-center">
             <div><img src="/img/open-doors.svg" alt="" /></div>
             <div class="text">
-              Ассоциация проводит ежегодную международную олимпиаду в рамках проекта Open doors для того чтобы тут накопирайтили
-              корректный текст под контент баннера. Можно писать достаточно объёмные описания для тех проектов, которым
-              недостаточно одного абзаца!
+              Ассоциация проводит ежегодную международную олимпиаду в рамках проекта Open doors для того чтобы тут
+              накопирайтили корректный текст под контент баннера. Можно писать достаточно объёмные описания для тех
+              проектов, которым недостаточно одного абзаца!
             </div>
             <div>
               <b-button variant="primary">УЗНАТЬ БОЛЬШЕ!</b-button>
@@ -39,6 +39,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+// @import "~bootstrap/scss/variables";
+
 .carousel {
   &-wrapper {
     margin: 20px auto;
@@ -65,7 +67,7 @@ export default {
     width: 900px;
     height: 450px;
     position: relative;
-    background-color: #f12578;
+    background-color: var(--brand);
     -webkit-clip-path: polygon(40px 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%, 0 40px);
     clip-path: polygon(40px 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%, 0 40px);
 
@@ -103,12 +105,12 @@ export default {
 
         .text {
           font: 14px/16px OfficinaSansMediumC;
-          color: #ffffff;
+          color: var(--white);
         }
 
         button {
           font: 16px/24px OfficinaSansBoldC;
-          color: #ffffff;
+          color: var(--white);
         }
       }
     }

@@ -14,6 +14,6 @@ export default {
 .news-wrapper {
   width: 1040px;
   height: 400px;
-  background-color: #ffffff;
+  background-color: var(--white);
 }
 </style>

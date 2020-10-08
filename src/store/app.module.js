@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-vars */
 import axios from "axios";
 
 import { FETCH_MAP_STARTED, FETCH_MAP_SUCCESS, FETCH_MAP_FAILURE, GET_MAP } from "./actions";
+
+import map from "./mapData";
 
 const state = {
   mapData: [],
@@ -12,7 +15,7 @@ const state = {
 };
 
 const getters = {
-  map: (state) => state.mapData,
+  mapData: (state) => state.mapData,
   loadingMap: (state) => state.loadingMap,
   hasError: (state) => state.error.is,
   errorMessage: (state) => state.error.message,
@@ -22,10 +25,12 @@ const actions = {
   async [GET_MAP]({ commit }) {
     commit(FETCH_MAP_STARTED);
     try {
-      const { status, data } = await axios.get("/map");
-      if (status === 200 && data) {
-        commit(FETCH_MAP_SUCCESS, data);
-      }
+      // const { status, data } = await axios.get("/map");
+      // if (status === 200 && data) {
+      // }
+      setTimeout(() => {
+        commit(FETCH_MAP_SUCCESS, map);
+      }, 2000);
     } catch (err) {
       commit(FETCH_MAP_FAILURE, "mapFailure");
     }

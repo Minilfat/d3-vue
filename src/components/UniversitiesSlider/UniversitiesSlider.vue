@@ -95,6 +95,7 @@ export default {
     },
 
     _changeUniversity() {
+      if (this.data.length === 0) return;
       const { id } = this.data[Math.floor(this.data.length / 2)];
       this.$emit("university-changed", id);
     },

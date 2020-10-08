@@ -57,5 +57,16 @@
   "search.programs": "Academic Programs",
   "search.mobility": "Professional Opportunities",
   "search.keyword": "Enter a keyword, for example, \"engineering\"...",
-  "main.label": "Association Global Universities of Russia"
+  "main.label": "Association Global Universities of Russia",
+  "copyright": "Association «Global Universities» © 2020",
+  "footer_address": "Moscow, Myasnitskaya st., 20",
+  "footer_contacts": "Contacts",
+  "footer_subscribe": "Subscribe",
+  "footer_useful-links": "Useful links",
+  "useful-links.ministry": "The Ministry of Education and Science of Russian Federation",
+  "useful-links.education": "Federal Portal \"Russian Education\"",
+  "useful-links.council": "Council on increasing competitiveness of the leading universities of Russian Federation",
+  "useful-links.help": "Support",
+  "subscription_mail.send": "Send",
+  "subscription_mail.placeholder": "Enter your email"
 }

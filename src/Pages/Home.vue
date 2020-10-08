@@ -35,9 +35,9 @@
       </div>
     </transition>
 
-    <div class="news-block">
+    <!-- <div class="news-block">
       <News />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -45,7 +45,7 @@
 import { mapGetters, mapActions } from "vuex";
 
 import Map from "../components/Map/Map.vue";
-import News from "../components/News/News.vue";
+// import News from "../components/News/News.vue";
 import Carousel from "../components/Carousel/Carousel.vue";
 import MainSearch from "../components/MainSearch/MainSearch.vue";
 import UniversitiesSlider from "../components/UniversitiesSlider/UniversitiesSlider.vue";
@@ -57,7 +57,7 @@ export default {
   name: "Home",
   components: {
     Map,
-    News,
+    // News,
     Carousel,
     MainSearch,
     UniversitiesSlider,

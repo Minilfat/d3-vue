@@ -21,16 +21,18 @@
                   <div class="content">
                     <ul>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.association-about") }}</a>
+                        <router-link to="test">
+                          {{ $t("middle-menu.association-about") }}
+                        </router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.association-council") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.association-council") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.audit-cometee") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.audit-cometee") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.projects") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.projects") }}</router-link>
                       </li>
                     </ul>
                   </div>
@@ -42,10 +44,10 @@
                   <div class="content">
                     <ul>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.association-members") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.association-members") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.practices") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.practices") }}</router-link>
                       </li>
                     </ul>
                   </div>
@@ -73,13 +75,13 @@
                   <div class="content">
                     <ul>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.grants") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.grants") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.international_contests") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.international_contests") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.rd") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.rd") }}</router-link>
                       </li>
                     </ul>
                   </div>
@@ -91,16 +93,16 @@
                   <div class="content">
                     <ul>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.conferences") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.conferences") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.postdock") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.postdock") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.seminars") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.seminars") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.other") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.other") }}</router-link>
                       </li>
                     </ul>
                   </div>
@@ -125,16 +127,16 @@
                   <div class="content">
                     <ul>
                       <li>
-                        <a href="#"> {{ $t("bachelor") }}</a>
+                        <router-link to="test"> {{ $t("bachelor") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("n_specialty") }}</a>
+                        <router-link to="test"> {{ $t("n_specialty") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("master") }}</a>
+                        <router-link to="test"> {{ $t("master") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("postgraduate") }}</a>
+                        <router-link to="test"> {{ $t("postgraduate") }}</router-link>
                       </li>
                     </ul>
                   </div>
@@ -146,16 +148,16 @@
                   <div class="content">
                     <ul>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.lectures_class") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.lectures_class") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.internships") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.internships") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.summerschools") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.summerschools") }}</router-link>
                       </li>
                       <li>
-                        <a href="#"> {{ $t("middle-menu.masterclasses") }}</a>
+                        <router-link to="test"> {{ $t("middle-menu.masterclasses") }}</router-link>
                       </li>
                     </ul>
                   </div>

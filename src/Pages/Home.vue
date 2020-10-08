@@ -90,24 +90,29 @@ export default {
       this.universityInfo = this.universitiesStatistics[id];
       this.shownUniversity = id;
     },
+
+    _initMap(value) {
+      this.mapLoaded = true;
+      this.universities = value;
+      this.sliderData = value.reduce((acc, item) => acc.concat(item.universities), []);
+      this.universitiesStatistics = value.reduce((acc, item) => {
+        item.universities.forEach((uni) => {
+          acc[uni.id] = uni;
+        });
+        return acc;
+      }, {});
+    },
   },
 
   mounted() {
+    if (this.mapData && this.mapData.length > 0) return this._initMap(this.mapData);
     this[GET_MAP]();
   },
 
   watch: {
     mapData(value) {
       if (value && value.length > 0) {
-        this.mapLoaded = true;
-        this.universities = value;
-        this.sliderData = value.reduce((acc, item) => acc.concat(item.universities), []);
-        this.universitiesStatistics = value.reduce((acc, item) => {
-          item.universities.forEach((uni) => {
-            acc[uni.id] = uni;
-          });
-          return acc;
-        }, {});
+        this._initMap(value);
       }
     },
   },

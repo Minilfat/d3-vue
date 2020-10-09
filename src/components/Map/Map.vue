@@ -5,9 +5,7 @@
 <script>
 /* eslint-disable no-unused-vars */
 import * as d3 from "d3";
-import * as topojson from "topojson-client";
-import topologyMap from "./russia.json";
-import Crimea from "./crimea.json";
+import Russia from "./Russia.json";
 import { addBackgroundImagePattern } from "./helpers";
 
 const w = 960;
@@ -223,7 +221,6 @@ export default {
     },
 
     createMap() {
-      const borders = topojson.mesh(topologyMap, topologyMap.objects.russia, (a, b) => a === b);
       this.projection = d3
         .geoAlbers()
         .rotate([-105, 0])
@@ -241,8 +238,7 @@ export default {
 
       this.svg.append("defs");
       this.svgG = this.svg.append("g");
-      this.svgG.attr("class", "region").append("path").attr("d", this.path(borders));
-      this.svgG.append("path").attr("d", this.path(Crimea));
+      this.svgG.attr("class", "region").append("path").attr("d", this.path(Russia));
     },
 
     addBg() {

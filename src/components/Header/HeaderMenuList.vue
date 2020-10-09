@@ -1,7 +1,6 @@
 <template>
   <transition name="menu-list">
     <div v-if="isShown" class="d-flex flex-column header-menu-list" :data-pointer-position="pointerPosition">
-      <!-- @click="(e) => e.stopPropagation()" -->
       <div class="header-menu-list-label d-flex align-items-center">
         <span>{{ label }}</span>
       </div>
@@ -79,7 +78,7 @@ export default {
 
 .menu-list-enter-active,
 .menu-list-leave-active {
-  transition: opacity 0.6s;
+  transition: opacity 0.3s;
 }
 .menu-list-enter,
 .menu-list-leave-to {

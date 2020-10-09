@@ -3,9 +3,9 @@
     <div class="header-item header-logo d-flex justify-content-center align-items-center">
       <img :src="getLogoUrl()" alt="logo" />
     </div>
-    <div class="header-item flex-grow-1">
+    <div class="header-item flex-grow-1" v-clickoutside="hideMenuList">
       <div class="header-nav-menu d-flex ml-auto align-items-center">
-        <div class="header-nav-menu__item" @click="showMenuList('association')">
+        <div class="header-nav-menu__item" @click.prevent="showMenuList('association')">
           <div class="header-nav-menu__item-label">{{ $t("middle-menu.association") }}</div>
           <div class="header-nav-menu__item-list left">
             <HeaderMenuList
@@ -59,7 +59,7 @@
         <div class="header-nav-menu__item">
           <div class="header-nav-menu__item-label">{{ $t("middle-menu.news") }}</div>
         </div>
-        <div class="header-nav-menu__item" @click="showMenuList('science')">
+        <div class="header-nav-menu__item" @click.prevent="showMenuList('science')">
           <div class="header-nav-menu__item-label">{{ $t("middle-menu.science") }}</div>
           <div class="header-nav-menu__item-list center">
             <HeaderMenuList
@@ -111,7 +111,7 @@
             </HeaderMenuList>
           </div>
         </div>
-        <div class="header-nav-menu__item" @click="showMenuList('education')">
+        <div class="header-nav-menu__item" @click.prevent="showMenuList('education')">
           <div class="header-nav-menu__item-label">{{ $t("middle-menu.education") }}</div>
           <div class="header-nav-menu__item-list right">
             <HeaderMenuList
@@ -195,6 +195,24 @@ export default {
       shownMenuList: "",
     };
   },
+  directives: {
+    clickoutside: {
+      bind: function (el, binding, vnode) {
+        el.clickOutsideEvent = function (event) {
+          if (!(el == event.target || el.contains(event.target))) {
+            vnode.context[binding.expression](event);
+          }
+        };
+        document.body.addEventListener("click", el.clickOutsideEvent);
+      },
+      unbind: function (el) {
+        document.body.removeEventListener("click", el.clickOutsideEvent);
+      },
+      stopProp(event) {
+        event.stopPropagation();
+      },
+    },
+  },
   methods: {
     getLogoUrl() {
       return `/img/logo-${this.$i18n.locale}.svg`;
@@ -207,6 +225,9 @@ export default {
     },
     showMenuList(item) {
       this.shownMenuList = this.shownMenuList === item ? "" : item;
+    },
+    hideMenuList() {
+      this.shownMenuList = "";
     },
   },
 };
@@ -245,7 +266,9 @@ export default {
   &-logo {
     position: relative;
     width: 350px;
+    min-width: 350px;
     height: 120px;
+    min-height: 120px;
     background-color: #0284c5;
 
     &::before {

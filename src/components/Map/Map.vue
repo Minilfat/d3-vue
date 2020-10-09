@@ -7,6 +7,7 @@
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import topologyMap from "./russia.json";
+import Crimea from "./crimea.json";
 import { addBackgroundImagePattern } from "./helpers";
 
 const w = 960;
@@ -62,7 +63,11 @@ export default {
           vm.cityClickedHandler(this, d);
         });
 
-      this.universitiesСities.append("circle").classed("city-point-circle", true).attr("r", CIRCLE_PROPS.r).attr("fill", CIRCLE_PROPS.fill);
+      this.universitiesСities
+        .append("circle")
+        .classed("city-point-circle", true)
+        .attr("r", CIRCLE_PROPS.r)
+        .attr("fill", CIRCLE_PROPS.fill);
     },
 
     cityClickedHandler(node, data) {
@@ -71,7 +76,6 @@ export default {
         this.hideCity(node);
         this.showUniversity(data.universities[0].id);
       } else {
-        // console.log(this.svgG.select(".suggested-universities"));
         this.removeSuggestions();
         this.suggestUniversities(node, data.universities);
       }
@@ -238,6 +242,7 @@ export default {
       this.svg.append("defs");
       this.svgG = this.svg.append("g");
       this.svgG.attr("class", "region").append("path").attr("d", this.path(borders));
+      this.svgG.append("path").attr("d", this.path(Crimea));
     },
 
     addBg() {
